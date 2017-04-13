@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js && webpack --watch",
+    "start": "node server.js & webpack --watch --hot",
     "debug": "npm start && npm-run webpack-dev-server"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.16.1",
+    "client-oauth2": "^4.0.0",
     "express": "^4.15.2",
     "react": "^15.5.3",
     "react-dom": "^15.5.3",
