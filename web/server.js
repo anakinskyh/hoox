@@ -17,6 +17,10 @@ app.get('/', function(req, res) {
     res.render('main');
 });
 
+app.get('/search', function(req, res) {
+    res.render('search');
+});
+
 // about page
 //app.get('/about', function(req, res) {
 //    res.render('pages/about');

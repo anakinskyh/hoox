@@ -9532,7 +9532,7 @@ var ReactDOM = __webpack_require__(80);
 ReactDOM.render(React.createElement(
     'h1',
     null,
-    'Hoox'
+    'Main'
 ), document.getElementById('root'));
 
 /***/ }),
