@@ -1,3 +1,11 @@
+/*HEADER*/
+
+
+.row {
+     margin-left: 0px;
+     margin-right: 0px;
+}
+
 body{
     width: 100%;
 }
@@ -36,3 +44,13 @@ body{
     border-color: #ffffff;
 }
 
+/*END HEADER*/
+
+
+/*CAROUSEL*/
+
+.carousel-inner img{
+    width: 100%;
+}
+
+/*END CAROUSEL*/
