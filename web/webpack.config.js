@@ -2,7 +2,7 @@ module.exports = {
     entry: './app/app.jsx',
     output: {
         path: __dirname,
-        filename: './public/bundle.js'
+        filename: './views/js/bundle.js'
     },
     resolve: {
         modules: ['node_modules', './app/components', './app/api'],
