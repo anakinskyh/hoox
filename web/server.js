@@ -19,8 +19,10 @@ app.get('/', function(req, res) {
 });
 
 app.post('/search', function(req, res) {
-    res.send('search word: ' + req.body.searchword);
-    res.render('search');
+    var searchword = req.body.searchword;
+    res.render('search',{
+        searchword: searchword
+    });
 });
 
 
