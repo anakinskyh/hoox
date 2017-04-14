@@ -16,6 +16,7 @@
     "express": "^4.15.2",
     "grenade": "^0.1.1",
     "react": "^15.5.3",
+    "react-bootstrap": "^0.30.8",
     "react-dom": "^15.5.3",
     "react-facebook-login-component": "^0.6.0",
     "simple-oauth2": "^1.1.0",
