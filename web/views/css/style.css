@@ -63,4 +63,46 @@ body{
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+/*TOP TEN*/
+.topten{
+    color: white;
+}
+
+.padding-left-0{
+    padding-left: 0; 
+}
+
+.playicon{
+    font-size: 2em;
+    display: none;
+    cursor: pointer;
+}
+
+.rank{
+    border-top: 1px solid grey;
+    padding-top: 10px;
+}
+
+.rank:hover .playicon{
+    display: block;
+}
+
+.songrank{
+    width: 50%;
+    height: 50%;
+    text-align: center;
+    background: red;
+}
+
+.rank:hover .songrank{
+    display: none
+}
+
+.artistnamecolor{
+    color: grey;
+}
+/*END TOP TEN*/
+
+
 /*END MAIN*/

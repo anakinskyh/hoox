@@ -2,6 +2,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import MyCarousel from './components/mycarousel'
+import TopTen from './components/topten'
 
 ReactDOM.render(
     <MyCarousel />,
@@ -15,7 +16,7 @@ ReactDOM.render(
 
 
 ReactDOM.render(
-    <h1>Top10</h1>,
+    <TopTen />,
     document.getElementById('topten-content')
 );
 
