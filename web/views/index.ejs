@@ -11,12 +11,34 @@
 
 </head>
 <body>
-    <div id="header">
-        <p style="color:white">header</p>
+    <div id="header" class="row">
+        <div id="logo" class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <img src="images/logo/HOOX.png">
+        </div>
+        <div id="search" class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div id="search-box" class="input-group">
+                <input type="text" class="form-control" placeholder="Search for...">
+                <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                </span>
+            </div><!-- /input-group -->
+
+        </div>
+        <div id="user" class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div id="user-box" class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+                    <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">HTML</a></li>
+                    <li><a href="#">CSS</a></li>
+                    <li><a href="#">JavaScript</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <div id="content">
-        <% include main %>
+        <%- body %>
     </div>
 
 

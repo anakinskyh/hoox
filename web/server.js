@@ -1,8 +1,11 @@
 
 var express = require('express');
 var app = express();
+var engine = require('ejs-locals');
+
 
 // set the view engine to ejs
+app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 app.use('/', express.static('views'));
 
@@ -11,7 +14,7 @@ app.use('/', express.static('views'));
 
 // index page
 app.get('/', function(req, res) {
-    res.render('index');
+    res.render('main');
 });
 
 // about page
