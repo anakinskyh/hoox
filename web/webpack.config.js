@@ -1,8 +1,11 @@
 module.exports = {
-    entry: './app/app.jsx',
+    entry: {
+        main: './app/app.jsx',
+        search: './app/apps.jsx'
+    },
     output: {
         path: __dirname,
-        filename: './views/js/bundle.js'
+        filename: './views/js/[name]-bundle.js'
     },
     resolve: {
         modules: ['node_modules', './app/components', './app/api'],

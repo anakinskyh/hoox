@@ -3,6 +3,6 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 ReactDOM.render(
-    <h1>app.jsx (main)</h1>,
-    document.getElementById('main-root')
+    <h1>apps.jsx (search)</h1>,
+    document.getElementById('search-root')
 );
