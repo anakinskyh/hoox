@@ -19,6 +19,8 @@
     "express": "^4.15.2",
     "express-partials": "^0.3.0",
     "grenade": "^0.1.1",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.1.1",
     "react": "^15.5.3",
     "react-bootstrap": "^0.30.8",
     "react-dom": "^15.5.3",
