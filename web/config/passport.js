@@ -38,7 +38,7 @@ module.exports = function(passport) {
     // facebook will send back the token and profile
     function(token, refreshToken, profile, done) {
 
-        console.log('profile '+token+'\n');
+        console.log('profile '+profile+'\n');
         // do something
     }));
 
