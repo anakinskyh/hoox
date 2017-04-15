@@ -29376,6 +29376,7 @@ exports.default = MyCarousel;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.RecommendItem = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -29392,6 +29393,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var recData = [{ id: 1, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song1', artistname: 'Artist1', view: 12000 }, { id: 2, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song2', artistname: 'Artist2', view: 4390 }, { id: 3, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song3', artistname: 'Artist3', view: 32910 }, { id: 4, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song4', artistname: 'Artist4', view: 2090 }];
 
 var Recommend = function (_React$Component) {
     _inherits(Recommend, _React$Component);
@@ -29411,16 +29414,9 @@ var Recommend = function (_React$Component) {
                 _react2.default.createElement(
                     _reactBootstrap.Row,
                     null,
-                    _react2.default.createElement(
-                        _reactBootstrap.Col,
-                        { xs: 3, sm: 3, md: 3, lg: 3 },
-                        'Y11111'
-                    ),
-                    _react2.default.createElement(
-                        _reactBootstrap.Col,
-                        { xs: 3, sm: 3, md: 3, lg: 3 },
-                        'Y2'
-                    )
+                    recData.map(function (item, index) {
+                        return _react2.default.createElement(RecommendItem, { key: index, iden: item.id, img: item.img, songname: item.songname, artistname: item.artistname, view: item.view });
+                    })
                 )
             );
         }
@@ -29430,6 +29426,76 @@ var Recommend = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Recommend;
+
+var RecommendItem = exports.RecommendItem = function (_React$Component2) {
+    _inherits(RecommendItem, _React$Component2);
+
+    function RecommendItem() {
+        _classCallCheck(this, RecommendItem);
+
+        return _possibleConstructorReturn(this, (RecommendItem.__proto__ || Object.getPrototypeOf(RecommendItem)).apply(this, arguments));
+    }
+
+    _createClass(RecommendItem, [{
+        key: 'clickPlay',
+        value: function clickPlay(recId) {
+            console.log("clickPlay of rec" + recId);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this3 = this;
+
+            return _react2.default.createElement(
+                _reactBootstrap.Col,
+                { xs: 3, sm: 3, md: 3, lg: 3, id: 'rec' + this.props.iden, className: 'rec' },
+                _react2.default.createElement(
+                    _reactBootstrap.Row,
+                    { className: 'rec-img' },
+                    _react2.default.createElement(_reactBootstrap.Image, { src: this.props.img, rounded: true }),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'rec-filter' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'rec-playicon', onClick: function onClick() {
+                                    return _this3.clickPlay(_this3.props.iden);
+                                } },
+                            _react2.default.createElement('i', { className: 'fa fa-play-circle-o rec-playicon-i', 'aria-hidden': 'true' })
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'rec-view' },
+                            _react2.default.createElement('i', { className: 'fa fa-eye view-icon', 'aria-hidden': 'true' }),
+                            _react2.default.createElement(
+                                'p',
+                                null,
+                                '\xA0',
+                                this.props.view
+                            )
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    _reactBootstrap.Row,
+                    { className: 'rec-desc' },
+                    _react2.default.createElement(
+                        'p',
+                        { className: 'rec-song-name' },
+                        this.props.songname
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        { className: 'rec-song-artist' },
+                        this.props.artistname
+                    )
+                )
+            );
+        }
+    }]);
+
+    return RecommendItem;
+}(_react2.default.Component);
 
 /***/ }),
 /* 299 */
