@@ -3,6 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import MyCarousel from './components/mycarousel'
 import TopTen from './components/topten'
+import Recommend from './components/recommend'
 
 ReactDOM.render(
     <MyCarousel />,
@@ -10,7 +11,7 @@ ReactDOM.render(
 );
 
 ReactDOM.render(
-    <h1>Recommend</h1>,
+    <Recommend />,
     document.getElementById('recommend-content')
 );
 
