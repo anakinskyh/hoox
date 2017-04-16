@@ -27,6 +27,7 @@
     "react-dom": "^15.5.3",
     "react-facebook-login-component": "^0.6.0",
     "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
     "simple-oauth2": "^1.1.0",
     "webpack-dev-server": "^2.4.2"
   },

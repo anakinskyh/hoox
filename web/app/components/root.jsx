@@ -15,7 +15,7 @@ import {Form} from 'react-bootstrap';
 import {FormControl} from 'react-bootstrap';
 
 
-export default class App extends React.Component{
+export default class Root extends React.Component{
     render(){
         return(
             <div>
