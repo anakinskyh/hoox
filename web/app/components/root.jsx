@@ -6,7 +6,7 @@ import Header from './header'
 import MyCarousel from './mycarousel'
 import Recommend from './recommend'
 import TopTen from './topten'
-import Account from './account'
+// import Account from './account'
 
 import {Row} from 'react-bootstrap';
 import {Col} from 'react-bootstrap';

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Account from './account'
+// import Account from './account'
 
 import {Row} from 'react-bootstrap';
 import {Col} from 'react-bootstrap';
@@ -16,7 +16,7 @@ export default class Header extends React.Component{
             <Row id="header-content">
                 <HeaderLogo/>
                 <HeaderSearchBox/>
-                <HeaderUser/>
+                {/*<HeaderUser/>*/}
             </Row>
         );
     }
@@ -50,13 +50,13 @@ export class HeaderSearchBox extends React.Component{
     }
 }
 
-export class HeaderUser extends React.Component{
+/*export class HeaderUser extends React.Component{
 
     render(){
         return(
             <Col xs={4} sm={4} md={4} lg={4} id="search">
                 <div id="user-box" className="dropdown">
-                {/* <button className="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">User<span className="caret"></span></button> */}
+                 <button className="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">User<span className="caret"></span></button> 
                     <div id='account-menu'>
                         <Account />
                     </div>
@@ -67,4 +67,4 @@ export class HeaderUser extends React.Component{
             </Col>
         );
     }
-}
+}*/
