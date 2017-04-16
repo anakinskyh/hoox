@@ -12,6 +12,7 @@
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
-    "mongoose": "^4.9.4"
+    "mongoose": "^4.9.4",
+    "mongoose-findorcreate": "^1.0.1"
   }
 }
