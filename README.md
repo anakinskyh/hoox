@@ -1,1 +1,5 @@
 # hoox
+
+## API
+
+|   Method  |

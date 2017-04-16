@@ -9,7 +9,12 @@ module.exports = function(router){
         var edited = req.body.edited?( new Date(req.body.edited) ):(Date.now() );
 
         // parse to object
-        songs = JSON.parse(songs);
+        // console.log(songs);
+        // // songs = JSON.parse(songs);
+        // for(var i=0;i<songs.length;i++){
+        //     songs[i] = JSON.parse(songs[i]);
+        // }
+        // console.log(songs);
 
         // get playlist
         Playlist.findOne({'user_id':user_id},function(err,playlist){

@@ -14,7 +14,12 @@ export class Login extends React.Component{
 }
 
 export class User extends React.Component{
-    
+    render(){
+        return(
+            <div>
+            </div>
+        );
+    }
 }
 
 export default class Account extends React.Component{
@@ -22,6 +27,9 @@ export default class Account extends React.Component{
 
         var isLogedIn = false;
 
-        return isLogedIn?(<User/>):(<Login/>);
+        if(isLogedIn)
+            return (<User/>);
+        else 
+            return (<Login/>);
     }
 }
