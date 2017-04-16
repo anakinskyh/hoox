@@ -5,6 +5,12 @@ import MyCarousel from './components/mycarousel'
 import TopTen from './components/topten'
 import Account from './components/account'
 import Recommend from './components/recommend'
+import Header from './components/header'
+
+ReactDOM.render(
+    <Header />,
+    document.getElementById('header')
+);
 
 ReactDOM.render(
     <MyCarousel />,
