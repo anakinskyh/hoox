@@ -1,37 +1,49 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import MyCarousel from './components/mycarousel'
-import TopTen from './components/topten'
-import Account from './components/account'
-import Recommend from './components/recommend'
-import Header from './components/header'
+import { Router, Route, hashHistory } from 'react-router'
 
-ReactDOM.render(
-    <Header />,
-    document.getElementById('header')
-);
+import App from './components/app'
 
-ReactDOM.render(
-    <MyCarousel />,
-    document.getElementById('myCarousel')
-);
 
-ReactDOM.render(
-    <Recommend />,
-    document.getElementById('recommend-content')
-);
+//ReactDOM.render((
+//    <Router>
+//        <Route path="/" component={App} />
+//    </Router>
+//), document.getElementById('app'));
+
 
 
 ReactDOM.render(
-    <TopTen />,
-    document.getElementById('topten-content')
+    <App/>,
+    document.getElementById('app')
 );
 
-ReactDOM.render(
-    <Account />,
-    document.getElementById('account-menu')
-);
+//ReactDOM.render(
+//    <Header />,
+//    document.getElementById('header')
+//);
+//
+//ReactDOM.render(
+//    <MyCarousel />,
+//    document.getElementById('myCarousel')
+//);
+//
+//ReactDOM.render(
+//    <Recommend />,
+//    document.getElementById('recommend-content')
+//);
+//
+//
+//ReactDOM.render(
+//    <TopTen />,
+//    document.getElementById('topten-content')
+//);
+//
+//ReactDOM.render(
+//    <Account />,
+//    document.getElementById('account-menu')
+//);
 
-console.log(<Account />);
-console.log(document.getElementById('account-menu'));
+//console.log(<Account />);
+//console.log(document.getElementById('account-menu'));

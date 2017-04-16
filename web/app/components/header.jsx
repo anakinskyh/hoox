@@ -1,4 +1,7 @@
 import React from 'react'
+
+import Account from './account'
+
 import {Row} from 'react-bootstrap';
 import {Col} from 'react-bootstrap';
 import {Image} from 'react-bootstrap';
@@ -54,7 +57,9 @@ export class HeaderUser extends React.Component{
             <Col xs={4} sm={4} md={4} lg={4} id="search">
                 <div id="user-box" className="dropdown">
                 {/* <button className="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">User<span className="caret"></span></button> */}
-                    <div id='account-menu'></div>
+                    <div id='account-menu'>
+                        <Account />
+                    </div>
                     <ul className="dropdown-menu">
                         <li><a href="#">Logout</a></li>
                     </ul>
