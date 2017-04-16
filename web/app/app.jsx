@@ -26,6 +26,3 @@ ReactDOM.render(
     <Account />,
     document.getElementById('account-menu')
 );
-
-console.log(<Account />);
-console.log(document.getElementById('account-menu'));
