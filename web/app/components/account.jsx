@@ -1,9 +1,5 @@
 import React from 'react'
 
-// for authentication
-var passport = require('passport');
-require('../../config/passport')(passport)
-
 export class Login extends React.Component{
     render(){
         return(
@@ -31,5 +27,7 @@ export default class Account extends React.Component{
             return (<User/>);
         else 
             return (<Login/>);
+
+        // return (<div></div>);
     }
 }

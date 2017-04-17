@@ -17,6 +17,7 @@ app.use('/', express.static('views'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 require('./app/routes')(app,passport);
+require('./app/auth')(app,passport);
 
 app.listen(8088);
 console.log(port+' is the magic port');

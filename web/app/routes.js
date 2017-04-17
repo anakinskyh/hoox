@@ -11,10 +11,4 @@ module.exports = function(app,passport){
             searchword: searchword
         });
     });
-
-
-    // about page
-    //app.get('/about', function(req, res) {
-    //    res.render('pages/about');
-    //});
 };

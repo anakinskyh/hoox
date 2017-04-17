@@ -1,6 +1,6 @@
 import React from 'react'
 
-// import Account from './account'
+import Account from './account'
 
 import {Row} from 'react-bootstrap';
 import {Col} from 'react-bootstrap';
@@ -50,7 +50,7 @@ export class HeaderSearchBox extends React.Component{
     }
 }
 
-/*export class HeaderUser extends React.Component{
+export class HeaderUser extends React.Component{
 
     render(){
         return(
@@ -67,4 +67,4 @@ export class HeaderSearchBox extends React.Component{
             </Col>
         );
     }
-}*/
+}
