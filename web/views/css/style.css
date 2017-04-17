@@ -53,6 +53,15 @@ body{
 
 /*CAROUSEL*/
 
+#myCarousel .carousel-indicators, #myCarousel .carousel-control{
+    display: none;
+}
+
+
+#myCarousel:hover .carousel-indicators, #myCarousel:hover .carousel-control{
+    display: block;
+}
+
 .carousel{
     width: 100%;
 }
@@ -161,6 +170,7 @@ body{
 }
 .topten{
     color: white;
+    padding-bottom: 65px;
 }
 
 .padding-left-0{
@@ -198,5 +208,79 @@ body{
 }
 /*END TOP TEN*/
 
+/*MUSIC PLAYER*/
+
+.musicplayer{
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(to right, #363738, #363738, #595a5b, #363738, #363738, #595a5b,#363738, #363738);
+    width: 100%;
+    padding: 10px 0;
+    color: lightgray;
+}
+
+.musicplayer audio{
+    display: none;
+}
+
+.music-player-icon{
+    text-align: center
+}
+
+.music-player-icon .step-forward{
+    font-size: 1.5em;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.music-player-icon .step-backward{
+    font-size: 1.5em;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.music-player-icon .pause{
+    font-size: 3em;
+    cursor: pointer;
+}
+
+.music-detail{
+    margin-left: 20px;
+    
+}
+
+.song-artist-detail{
+    margin-bottom: 10px;
+}
+
+.song-detail{
+    margin-right: 30px;
+}
+
+.artist-detail{
+    color: grey;
+}
+
+.music-bar{
+    width: 80%;
+    height: 5px;
+    background: grey;
+}
+
+.music-progress{
+    width: 20%;
+    height: 100%;
+    background: #25b227;
+}
+
+/*END MUSIC PLAYER*/
 
 /*END MAIN*/
