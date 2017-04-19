@@ -7,6 +7,7 @@ import Recommend from './recommend'
 import TopTen from './topten'
 import MusicPlayer from './musicplayer'
 // import Account from './account'
+import Player from './player'
 
 import {Row} from 'react-bootstrap';
 import {Col} from 'react-bootstrap';
