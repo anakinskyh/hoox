@@ -112,9 +112,9 @@ export default class MusicPlayer extends React.Component{
 
         return(
             <div>
-                <div className="playlist-tab">
+                {/*<div className="playlist-tab">
                     ddscdsdcd
-                </div>
+                </div>*/}
                 <div className="musicplayer row">
                     <div className="music-player-icon col-xs-1 col-xs-offset-2">
                         <i className="fa fa-step-backward step-backward" onClick={() => this.stepBackwardMusic()} aria-hidden="true"></i>

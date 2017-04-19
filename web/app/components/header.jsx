@@ -16,7 +16,7 @@ export default class Header extends React.Component{
             <Row id="header-content">
                 <HeaderLogo/>
                 <HeaderSearchBox/>
-                {/*<HeaderUser/>*/}
+                <HeaderUser/>
             </Row>
         );
     }
@@ -55,20 +55,78 @@ export class HeaderSearchBox extends React.Component{
 }
 
 export class HeaderUser extends React.Component{
+    constructor(){
+        super();
+        this.state = {
+            loginfocus: false,
+            loginSuccess: false
+        };
+    }
+
+    enterLogin(){
+        this.setState({
+            loginfocus: true
+        });
+    }
+
+    leaveLogin(){
+        this.setState({
+            loginfocus: false
+        });
+    }
+
+    facebookLogin(){
+        alert('Facebook Login');
+        this.setState({
+            loginSuccess: true
+        });
+    }
+
+    twitterLogin(){
+        alert('Twitter Login');
+        this.setState({
+            loginSuccess: true
+        });
+    }
+
+    googleLogin(){
+        alert('Google Login');
+        this.setState({
+            loginSuccess: true
+        });
+    }
+
+    logout(){
+        this.setState({
+            loginSuccess: false
+        });
+    }
 
     render(){
+
+        var show = {display: 'block'};
+        var hide = {display: 'none'};
+
         return(
-            <Col xs={4} sm={4} md={4} lg={4} id="search">
-                <div id="user-box" className="dropdown">
-                 <button className="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">User<span className="caret"></span></button> 
-                    <div id='account-menu'>
-                        <Account />
+            <div className="login-container col-xs-4">
+                <button className="login pull-right" style={this.state.loginSuccess ? hide : show} onMouseEnter={() => this.enterLogin()} onMouseLeave={() => this.leaveLogin()}>Login</button>
+                <div className="selectLogin row" style={this.state.loginfocus && !this.state.loginSuccess ? show : hide} onMouseEnter={() => this.enterLogin()} onMouseLeave={() => this.leaveLogin()} >
+                    <div className="col-xs-4">
+                        <img src="images/logo/facebook.png" className="logo-login" onClick={() => this.facebookLogin()} />
                     </div>
-                    <ul className="dropdown-menu">
-                        <li><a href="#">Logout</a></li>
-                    </ul>
+                    <div className="col-xs-4">
+                        <img src="images/logo/twitter.png" className="logo-login" onClick={() => this.twitterLogin()} />
+                    </div>
+                    <div className="col-xs-4">
+                        <img src="images/logo/google.png" className="logo-login" onClick={() => this.googleLogin()} />
+                    </div>
                 </div>
-            </Col>
+                <div className="logout" style={this.state.loginSuccess ? show : hide}>
+                    <i className="fa fa-user user-icon" aria-hidden="true"></i>
+                    <span className="user-name">Mr.Someone</span>
+                    <button className="logoutBtn" onClick={() => this.logout()}>Logout</button>
+                </div>
+            </div>
         );
     }
 }

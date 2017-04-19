@@ -3,9 +3,11 @@ import React from 'react'
 export default class TopTen extends React.Component{
     constructor(){
         super();
-        const temp = ['musics/music1.mp3', 'musics/music2.mp3', 'musics/music3.mp3',
-                    'musics/music4.mp3', 'musics/music5.mp3', 'musics/music6.mp3', 
-                    'musics/music7.mp3', 'musics/music8.mp3', 'musics/music9.mp3', 'http://www.stephaniequinn.com/Music/Allegro%20from%20Duet%20in%20C%20Major.mp3'
+        const temp = ['http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2011.mp3', 'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2005.mp3',
+                      'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2017.mp3', 'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2008.mp3',
+                      'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2001.mp3', 'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2013.mp3', 
+                      'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2002.mp3', 'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2007.mp3',
+                      'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2006.mp3', 'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2009.mp3'
                     ];
 
         this.state = {
