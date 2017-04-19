@@ -8,7 +8,8 @@ var SongSchema = new Schema({
   photo:String,
   album:String,
   artist:String,
-  url: {type:String,required:true, unique: true  }
+  url: {type:String,required:true, unique: true  },
+  view: Number
 });
 
 SongSchema.plugin(uniqueValidator);
