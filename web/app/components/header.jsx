@@ -36,13 +36,17 @@ export class HeaderLogo extends React.Component{
 
 export class HeaderSearchBox extends React.Component{
 
+    handleSubmit(){
+        console.log("search word is "+this.refs.searchword.value);
+    }
+
     render(){
         return(
             <Col xs={7} sm={4} md={4} lg={4} id="search">
-                <Form action="/search" method="post" className="input-group" id="search-box">
-                    <FormControl type="text" name="searchword" placeholder="Search for..." />
+                <Form className="input-group" id="search-box" >
+                    <input className="form-control" type="text" ref="searchword" placeholder="Search for..." />
                     <span className="input-group-btn">
-                        <button className="btn btn-default" type="submit"><i className="glyphicon glyphicon-search"></i></button>
+                        <button className="btn btn-default" type="button" onClick={() => this.handleSubmit()}><i className="glyphicon glyphicon-search"></i></button>
                     </span>
                 </Form>
             </Col>
