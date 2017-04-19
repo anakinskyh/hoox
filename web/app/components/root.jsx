@@ -6,6 +6,7 @@ import MyCarousel from './mycarousel'
 import Recommend from './recommend'
 import TopTen from './topten'
 // import Account from './account'
+import Player from './player'
 
 import {Row} from 'react-bootstrap';
 import {Col} from 'react-bootstrap';
@@ -40,6 +41,8 @@ export default class Root extends React.Component{
                     </Col>
 
                 </div>
+
+                <Player/>                
 
             </div>
         );
