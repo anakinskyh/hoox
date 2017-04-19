@@ -5,6 +5,7 @@ import Header from './header'
 import MyCarousel from './mycarousel'
 import Recommend from './recommend'
 import TopTen from './topten'
+import MusicPlayer from './musicplayer'
 // import Account from './account'
 import Player from './player'
 
@@ -16,6 +17,22 @@ import {FormControl} from 'react-bootstrap';
 
 
 export default class Root extends React.Component{
+    constructor(){
+        super();
+        this.state = {
+            songname: '',
+            artistname: ''
+        };
+    }
+
+    onClickTopTen(song, artist){
+        console.log(song + " " + artist);
+        this.setState({
+            songname: song,
+            artistname: artist
+        });
+    }
+
     render(){
         return(
             <div>
@@ -36,14 +53,12 @@ export default class Root extends React.Component{
                     <Col xs={5} sm={5} md={4} lg={3}  id="topten" >
                         <p className="title">TOP 10 CHART</p>
                         <div id="topten-content">
-                            <TopTen />
+                            <TopTen clickTopTen={this.onClickTopTen.bind(this)} />
                         </div>
                     </Col>
-
                 </div>
-
-                <Player/>                
-
+                <Player/>
+                <MusicPlayer songname={this.state.songname} artistname={this.state.artistname} />
             </div>
         );
     }
