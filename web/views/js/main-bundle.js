@@ -30168,18 +30168,19 @@ var Root = function (_React$Component) {
 
         _this.state = {
             songname: '',
-            artistname: ''
+            artistname: '',
+            musicSrc: ''
         };
         return _this;
     }
 
     _createClass(Root, [{
         key: 'onClickTopTen',
-        value: function onClickTopTen(song, artist) {
-            console.log(song + " " + artist);
+        value: function onClickTopTen(song, artist, music) {
             this.setState({
                 songname: song,
-                artistname: artist
+                artistname: artist,
+                musicSrc: music
             });
         }
     }, {
@@ -30231,7 +30232,7 @@ var Root = function (_React$Component) {
                         )
                     )
                 ),
-                _react2.default.createElement(_musicplayer2.default, { songname: this.state.songname, artistname: this.state.artistname })
+                _react2.default.createElement(_musicplayer2.default, { songname: this.state.songname, artistname: this.state.artistname, musicSrc: this.state.musicSrc })
             );
         }
     }]);
@@ -30620,51 +30621,204 @@ var MusicPlayer = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (MusicPlayer.__proto__ || Object.getPrototypeOf(MusicPlayer)).call(this));
 
+        _this.audio = new Audio();
+        _this.timeUpdate = _this.timeUpdate.bind(_this);
+        _this.endMusic = _this.endMusic.bind(_this);
+        _this.audio.ontimeupdate = _this.timeUpdate;
+        _this.audio.onended = _this.endMusic;
+
         _this.state = {
-            musicSrc: "musics/music1.mp3"
+            isPlay: false,
+            progress: 0
         };
         return _this;
     }
 
     _createClass(MusicPlayer, [{
+        key: "componentWillReceiveProps",
+        value: function componentWillReceiveProps(nextProps) {
+            this.setState({
+                isPlay: true
+            });
+
+            this.audio.src = nextProps.musicSrc;
+            this.audio.play();
+        }
+    }, {
+        key: "timeUpdate",
+        value: function timeUpdate() {
+            this.setState({
+                progress: this.audio.currentTime
+            });
+        }
+    }, {
+        key: "endMusic",
+        value: function endMusic() {
+            this.setState({
+                isPlay: false,
+                progress: 0
+            });
+        }
+    }, {
+        key: "playMusic",
+        value: function playMusic() {
+            if (this.props.musicSrc) {
+                this.setState({
+                    isPlay: true
+                });
+
+                this.audio.play();
+            }
+        }
+    }, {
+        key: "pauseMusic",
+        value: function pauseMusic() {
+            if (this.props.musicSrc) {
+                this.setState({
+                    isPlay: false
+                });
+
+                this.audio.pause();
+            }
+        }
+    }, {
+        key: "stepBackwardMusic",
+        value: function stepBackwardMusic() {
+            if (this.props.musicSrc) {
+                var time = this.audio.currentTime;
+                this.audio.currentTime = time - 10;
+            }
+        }
+    }, {
+        key: "stepForwardMusic",
+        value: function stepForwardMusic() {
+            if (this.props.musicSrc) {
+                var time = this.audio.currentTime;
+                this.audio.currentTime = time + 10;
+            }
+        }
+    }, {
+        key: "skipMusic",
+        value: function skipMusic(event) {
+            var div = event.target.getAttribute("data-music");
+            var rect;
+            if (div === "bar") {
+                rect = event.target.getBoundingClientRect();
+            } else {
+                rect = event.target.parentElement.getBoundingClientRect();
+            }
+
+            var posLeftMusicBar = Math.floor(rect.left);
+            var posRightMusicBar = Math.floor(rect.right);
+            var skipProgress = (event.pageX - posLeftMusicBar) * 100 / (posRightMusicBar - posLeftMusicBar) / 100;
+            if (this.audio.duration) {
+                this.audio.currentTime = skipProgress * this.audio.duration;
+            }
+        }
+    }, {
         key: "render",
         value: function render() {
+            var _this2 = this;
+
+            var playStyle;
+            var pauseStyle;
+
+            if (this.state.isPlay) {
+                playStyle = { display: 'none' };
+                pauseStyle = { display: 'inline' };
+            } else {
+                playStyle = { display: 'inline' };
+                pauseStyle = { display: 'none' };
+            }
+
+            var minuteProgress = Math.floor(this.state.progress / 60) < 10 ? "0" + Math.floor(this.state.progress / 60) : Math.floor(this.state.progress / 60);
+            var secondProgress = Math.floor(this.state.progress % 60) < 10 ? "0" + Math.floor(this.state.progress % 60) : Math.floor(this.state.progress % 60);
+
+            var minuteDuration = this.audio.duration ? Math.floor(this.audio.duration / 60) : 0;
+            minuteDuration = minuteDuration < 10 ? "0" + minuteDuration : minuteDuration;
+
+            var secondDuration = this.audio.duration ? Math.floor(this.audio.duration % 60) : 0;
+            secondDuration = secondDuration < 10 ? "0" + secondDuration : secondDuration;
+
             return _react2.default.createElement(
                 "div",
-                { className: "musicplayer row" },
+                null,
                 _react2.default.createElement(
                     "div",
-                    { className: "music-player-icon col-xs-1 col-xs-offset-3" },
-                    _react2.default.createElement("i", { className: "fa fa-step-backward step-backward", "aria-hidden": "true" }),
-                    _react2.default.createElement("i", { className: "fa fa-pause pause", "aria-hidden": "true" }),
-                    _react2.default.createElement("i", { className: "fa fa-step-forward step-forward", "aria-hidden": "true" })
+                    { className: "playlist-tab" },
+                    "ddscdsdcd"
                 ),
                 _react2.default.createElement(
                     "div",
-                    { className: "music-detail col-xs-5" },
+                    { className: "musicplayer row" },
                     _react2.default.createElement(
                         "div",
-                        { className: "song-artist-detail" },
+                        { className: "music-player-icon col-xs-1 col-xs-offset-2" },
+                        _react2.default.createElement("i", { className: "fa fa-step-backward step-backward", onClick: function onClick() {
+                                return _this2.stepBackwardMusic();
+                            }, "aria-hidden": "true" }),
+                        _react2.default.createElement("i", { className: "fa fa-play play", style: playStyle, onClick: function onClick() {
+                                return _this2.playMusic();
+                            }, "aria-hidden": "true" }),
+                        _react2.default.createElement("i", { className: "fa fa-pause pause", style: pauseStyle, onClick: function onClick() {
+                                return _this2.pauseMusic();
+                            }, "aria-hidden": "true" }),
+                        _react2.default.createElement("i", { className: "fa fa-step-forward step-forward", onClick: function onClick() {
+                                return _this2.stepForwardMusic();
+                            }, "aria-hidden": "true" })
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "music-detail col-xs-5" },
                         _react2.default.createElement(
-                            "span",
-                            { className: "song-detail" },
-                            this.props.songname
+                            "div",
+                            { className: "detail" },
+                            _react2.default.createElement(
+                                "span",
+                                { className: "song-detail" },
+                                this.props.songname
+                            ),
+                            _react2.default.createElement(
+                                "span",
+                                { className: "artist-detail" },
+                                this.props.artistname
+                            )
                         ),
                         _react2.default.createElement(
-                            "span",
-                            { className: "artist-detail" },
-                            this.props.artistname
+                            "div",
+                            { className: "row" },
+                            _react2.default.createElement(
+                                "div",
+                                { className: "music-bar col-xs-8", onClick: function onClick(e) {
+                                        return _this2.skipMusic(e);
+                                    }, "data-music": "bar" },
+                                _react2.default.createElement("div", { className: "music-progress", style: { width: this.state.progress * 100 / this.audio.duration + "%" }, "data-music": "progress" })
+                            ),
+                            _react2.default.createElement(
+                                "div",
+                                { className: "time-detail col-xs-4" },
+                                _react2.default.createElement(
+                                    "span",
+                                    null,
+                                    minuteProgress,
+                                    ":",
+                                    secondProgress
+                                ),
+                                " / ",
+                                _react2.default.createElement(
+                                    "span",
+                                    null,
+                                    minuteDuration,
+                                    ":",
+                                    secondDuration
+                                )
+                            )
                         )
                     ),
                     _react2.default.createElement(
                         "div",
-                        { className: "music-bar" },
-                        _react2.default.createElement("div", { className: "music-progress" }),
-                        _react2.default.createElement(
-                            "audio",
-                            { ref: "audio", controls: true, autoPlay: true },
-                            _react2.default.createElement("source", { src: this.state.musicSrc, type: "audio/mpeg" })
-                        )
+                        { className: "music-playlist col-xs-1" },
+                        _react2.default.createElement("i", { className: "fa fa-list playlist", title: "playlists", "aria-hidden": "true" })
                     )
                 )
             );
@@ -30905,25 +31059,33 @@ var TopTen = function (_React$Component) {
     function TopTen() {
         _classCallCheck(this, TopTen);
 
-        return _possibleConstructorReturn(this, (TopTen.__proto__ || Object.getPrototypeOf(TopTen)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (TopTen.__proto__ || Object.getPrototypeOf(TopTen)).call(this));
+
+        var temp = ['musics/music1.mp3', 'musics/music2.mp3', 'musics/music3.mp3', 'musics/music4.mp3', 'musics/music5.mp3', 'musics/music6.mp3', 'musics/music7.mp3', 'musics/music8.mp3', 'musics/music9.mp3', 'http://www.stephaniequinn.com/Music/Allegro%20from%20Duet%20in%20C%20Major.mp3'];
+
+        _this.state = {
+            // toptensong: Array(10).fill(null)
+            toptensong: temp
+        };
+        return _this;
     }
 
     _createClass(TopTen, [{
-        key: "render",
+        key: 'render',
         value: function render() {
             return _react2.default.createElement(
-                "div",
-                { className: "topten" },
-                _react2.default.createElement(TopTenItem, { onclick: this.props.clickTopTen, rank: "1", songname: "Song 1", artistname: "Artist 1" }),
-                _react2.default.createElement(TopTenItem, { onclick: this.props.clickTopTen, rank: "2", songname: "Song 2", artistname: "Artist 2" }),
-                _react2.default.createElement(TopTenItem, { onclick: this.props.clickTopTen, rank: "3", songname: "Song 3", artistname: "Artist 3" }),
-                _react2.default.createElement(TopTenItem, { onclick: this.props.clickTopTen, rank: "4", songname: "Song 4", artistname: "Artist 4" }),
-                _react2.default.createElement(TopTenItem, { onclick: this.props.clickTopTen, rank: "5", songname: "Song 5", artistname: "Artist 5" }),
-                _react2.default.createElement(TopTenItem, { onclick: this.props.clickTopTen, rank: "6", songname: "Song 6", artistname: "Artist 6" }),
-                _react2.default.createElement(TopTenItem, { onclick: this.props.clickTopTen, rank: "7", songname: "Song 7", artistname: "Artist 7" }),
-                _react2.default.createElement(TopTenItem, { onclick: this.props.clickTopTen, rank: "8", songname: "Song 8", artistname: "Artist 8" }),
-                _react2.default.createElement(TopTenItem, { onclick: this.props.clickTopTen, rank: "9", songname: "Song 9", artistname: "Artist 9" }),
-                _react2.default.createElement(TopTenItem, { onclick: this.props.clickTopTen, rank: "10", songname: "Song 10", artistname: "Artist 10" })
+                'div',
+                { className: 'topten' },
+                _react2.default.createElement(TopTenItem, { onclick: this.props.clickTopTen, rank: '1', songname: 'Song 1', artistname: 'Artist 1', music: this.state.toptensong[0] }),
+                _react2.default.createElement(TopTenItem, { onclick: this.props.clickTopTen, rank: '2', songname: 'Song 2', artistname: 'Artist 2', music: this.state.toptensong[1] }),
+                _react2.default.createElement(TopTenItem, { onclick: this.props.clickTopTen, rank: '3', songname: 'Song 3', artistname: 'Artist 3', music: this.state.toptensong[2] }),
+                _react2.default.createElement(TopTenItem, { onclick: this.props.clickTopTen, rank: '4', songname: 'Song 4', artistname: 'Artist 4', music: this.state.toptensong[3] }),
+                _react2.default.createElement(TopTenItem, { onclick: this.props.clickTopTen, rank: '5', songname: 'Song 5', artistname: 'Artist 5', music: this.state.toptensong[4] }),
+                _react2.default.createElement(TopTenItem, { onclick: this.props.clickTopTen, rank: '6', songname: 'Song 6', artistname: 'Artist 6', music: this.state.toptensong[5] }),
+                _react2.default.createElement(TopTenItem, { onclick: this.props.clickTopTen, rank: '7', songname: 'Song 7', artistname: 'Artist 7', music: this.state.toptensong[6] }),
+                _react2.default.createElement(TopTenItem, { onclick: this.props.clickTopTen, rank: '8', songname: 'Song 8', artistname: 'Artist 8', music: this.state.toptensong[7] }),
+                _react2.default.createElement(TopTenItem, { onclick: this.props.clickTopTen, rank: '9', songname: 'Song 9', artistname: 'Artist 9', music: this.state.toptensong[8] }),
+                _react2.default.createElement(TopTenItem, { onclick: this.props.clickTopTen, rank: '10', songname: 'Song 10', artistname: 'Artist 10', music: this.state.toptensong[9] })
             );
         }
     }]);
@@ -30939,54 +31101,49 @@ var TopTenItem = exports.TopTenItem = function (_React$Component2) {
     function TopTenItem() {
         _classCallCheck(this, TopTenItem);
 
-        var _this2 = _possibleConstructorReturn(this, (TopTenItem.__proto__ || Object.getPrototypeOf(TopTenItem)).call(this));
-
-        _this2.state = {
-            toptenLink: 0
-        };
-        return _this2;
+        return _possibleConstructorReturn(this, (TopTenItem.__proto__ || Object.getPrototypeOf(TopTenItem)).apply(this, arguments));
     }
 
     _createClass(TopTenItem, [{
-        key: "onChangeTopTenLink",
+        key: 'onChangeTopTenLink',
         value: function onChangeTopTenLink() {
-            this.props.onclick(this.props.songname, this.props.artistname);
+            this.props.onclick(this.props.songname, this.props.artistname, this.props.music);
         }
     }, {
-        key: "render",
+        key: 'render',
         value: function render() {
             var _this3 = this;
 
             return _react2.default.createElement(
-                "div",
-                { className: "row rank" },
+                'div',
+                { className: 'row rank' },
                 _react2.default.createElement(
-                    "div",
-                    { className: "col-xs-2 padding-left-0" },
+                    'div',
+                    { className: 'col-xs-2 padding-left-0' },
                     _react2.default.createElement(
-                        "div",
-                        { className: "songrank" },
+                        'div',
+                        { className: 'songrank' },
                         this.props.rank
                     ),
                     _react2.default.createElement(
-                        "div",
-                        { className: "playicon", onClick: function onClick() {
+                        'div',
+                        { className: 'playicon', onClick: function onClick() {
                                 return _this3.onChangeTopTenLink();
                             } },
-                        _react2.default.createElement("i", { className: "fa fa-play-circle-o", "aria-hidden": "true" })
+                        _react2.default.createElement('i', { className: 'fa fa-play-circle-o', 'aria-hidden': 'true' })
                     )
                 ),
                 _react2.default.createElement(
-                    "div",
-                    { className: "col-xs-10" },
+                    'div',
+                    { className: 'col-xs-10' },
                     _react2.default.createElement(
-                        "p",
+                        'p',
                         null,
                         this.props.songname
                     ),
                     _react2.default.createElement(
-                        "p",
-                        { className: "artistnamecolor" },
+                        'p',
+                        { className: 'artistnamecolor' },
                         this.props.artistname
                     )
                 )

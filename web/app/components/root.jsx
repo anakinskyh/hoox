@@ -20,15 +20,16 @@ export default class Root extends React.Component{
         super();
         this.state = {
             songname: '',
-            artistname: ''
+            artistname: '',
+            musicSrc: ''
         };
     }
 
-    onClickTopTen(song, artist){
-        console.log(song + " " + artist);
+    onClickTopTen(song, artist, music){
         this.setState({
             songname: song,
-            artistname: artist
+            artistname: artist,
+            musicSrc: music
         });
     }
 
@@ -56,7 +57,7 @@ export default class Root extends React.Component{
                         </div>
                     </Col>
                 </div>
-                <MusicPlayer songname={this.state.songname} artistname={this.state.artistname} />
+                <MusicPlayer songname={this.state.songname} artistname={this.state.artistname} musicSrc={this.state.musicSrc} />
             </div>
         );
     }
