@@ -15,9 +15,7 @@ ReactDOM.render(
     document.getElementById('search')
 );
 
-ReactDOM.render((
-    <Router>
-        <Route exact path="/" component={Root} />
-    </Router> ),
+ReactDOM.render(
+    <Root/>,
     document.getElementById('root')
 );
