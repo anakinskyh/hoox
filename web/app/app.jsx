@@ -10,12 +10,6 @@ import Main from './components/main'
 import Search from './components/search'
 
 
-// console.log(Search);
-ReactDOM.render(
-        <Search />,
-    document.getElementById('search')
-);
-
 ReactDOM.render(
     <Root page={<Main />}/>,
     document.getElementById('root')
