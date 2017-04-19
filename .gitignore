@@ -1,2 +1,4 @@
 /web/node_modules
 /api/node_modules
+/web/views/js/main-bundle.js
+/web/views/js/search-bundle.js
