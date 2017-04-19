@@ -373,8 +373,12 @@ html,body{
 .search-playicon{
     margin-left: auto;
     margin-right: auto;
+    cursor: pointer;
 }
 .search-artist{
     color: #ff0000;
+}
+.search-view{
+    color: #808080;
 }
 /*END SEARCH*/

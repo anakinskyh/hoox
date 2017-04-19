@@ -26851,6 +26851,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 // var youtubeStream = require('youtube-audio-stream')
 
+
+var searchData = [{ id: 1, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song1', artistname: 'Artist1', view: 12000 }, { id: 2, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song2', artistname: 'Artist2', view: 4390 }, { id: 3, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song3', artistname: 'Artist3', view: 32910 }, { id: 4, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song4', artistname: 'Artist4', view: 2090 }];
+
 var Search = function (_React$Component) {
     _inherits(Search, _React$Component);
 
@@ -26887,10 +26890,9 @@ var Search = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 { className: 'search' },
-                _react2.default.createElement(SearchItem, null),
-                _react2.default.createElement('hr', null),
-                _react2.default.createElement(SearchItem, null),
-                _react2.default.createElement('hr', null)
+                searchData.map(function (item, index) {
+                    return _react2.default.createElement(SearchItem, { key: index, iden: item.id, img: item.img, songname: item.songname, artistname: item.artistname, view: item.view });
+                })
             );
         }
     }]);
@@ -26910,43 +26912,64 @@ var SearchItem = exports.SearchItem = function (_React$Component2) {
     }
 
     _createClass(SearchItem, [{
+        key: 'clickPlay',
+        value: function clickPlay(searchId) {
+            console.log("clickPlay of search " + searchId);
+        }
+    }, {
         key: 'render',
         value: function render() {
+            var _this3 = this;
+
             return _react2.default.createElement(
                 'div',
-                { className: 'row searchItem is-flex' },
+                null,
                 _react2.default.createElement(
-                    _reactBootstrap.Col,
-                    { xs: 4, sm: 4, md: 4, lg: 4, className: 'search-play-col' },
+                    'div',
+                    { className: 'row searchItem is-flex' },
                     _react2.default.createElement(
-                        'div',
-                        { className: 'search-playicon' },
-                        _react2.default.createElement('i', { className: 'fa fa-play-circle-o ', 'aria-hidden': 'true' })
-                    )
-                ),
-                _react2.default.createElement(
-                    _reactBootstrap.Col,
-                    { xs: 4, sm: 4, md: 4, lg: 4, className: 'search-detail-col' },
-                    _react2.default.createElement(
-                        'div',
-                        null,
+                        _reactBootstrap.Col,
+                        { xs: 4, sm: 4, md: 4, lg: 4, className: 'search-play-col' },
                         _react2.default.createElement(
-                            'p',
-                            { className: 'search-song-name' },
-                            'Song1'
-                        ),
-                        _react2.default.createElement(
-                            'p',
-                            { className: 'search-artist' },
-                            'Artist1'
+                            'div',
+                            { className: 'search-playicon', onClick: function onClick() {
+                                    return _this3.clickPlay(_this3.props.iden);
+                                } },
+                            _react2.default.createElement('i', { className: 'fa fa-play-circle-o ', 'aria-hidden': 'true' })
                         )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.Col,
+                        { xs: 4, sm: 4, md: 4, lg: 4, className: 'search-detail-col' },
+                        _react2.default.createElement(
+                            'div',
+                            null,
+                            _react2.default.createElement(
+                                'p',
+                                { className: 'search-song-name' },
+                                this.props.songname
+                            ),
+                            _react2.default.createElement(
+                                'p',
+                                { className: 'search-artist' },
+                                this.props.artistname
+                            ),
+                            _react2.default.createElement(
+                                'p',
+                                { className: 'search-view' },
+                                _react2.default.createElement('i', { className: 'fa fa-eye view-icon', 'aria-hidden': 'true' }),
+                                '\xA0',
+                                this.props.view
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.Col,
+                        { xs: 4, sm: 4, md: 4, lg: 4, className: 'search-img-col' },
+                        _react2.default.createElement(_reactBootstrap.Image, { src: this.props.img, rounded: true, className: 'search-img' })
                     )
                 ),
-                _react2.default.createElement(
-                    _reactBootstrap.Col,
-                    { xs: 4, sm: 4, md: 4, lg: 4, className: 'search-img-col' },
-                    _react2.default.createElement(_reactBootstrap.Image, { src: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', rounded: true, className: 'search-img' })
-                )
+                _react2.default.createElement('hr', null)
             );
         }
     }]);
