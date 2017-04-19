@@ -2,6 +2,7 @@ import React from 'react'
 
 import Header from './header'
 import Main from './main'
+import Search from './search'
 
 
 var Root = React.createClass({
@@ -15,16 +16,17 @@ var Root = React.createClass({
             page: this.props.page
         };
     },
-    handleUpdateName: function (nameInput) {
+    updatePage: function () {
+        console.log("updatePage in Root");
         this.setState({
-            page: nameInput
+            page: <Search/>
         });
     },
     render: function () {
         return(
             <div>
                 <div id="header" className="row">
-                    <Header />
+                    <Header onUpdatePage={() => this.updatePage()}/>
                 </div>
             {this.state.page}
             </div>
