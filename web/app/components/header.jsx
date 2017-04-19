@@ -11,11 +11,16 @@ import {FormControl} from 'react-bootstrap';
 
 export default class Header extends React.Component{
 
+    updatePage(){
+        console.log("updatePage in Header");
+        this.props.onUpdatePage();
+    }
+
     render(){
         return(
             <Row id="header-content">
                 <HeaderLogo/>
-                <HeaderSearchBox/>
+                <HeaderSearchBox onUpdatePage={() => this.updatePage()}/>
                 {/*<HeaderUser/>*/}
             </Row>
         );
@@ -38,6 +43,7 @@ export class HeaderSearchBox extends React.Component{
 
     handleSubmit(){
         console.log("search word is "+this.refs.searchword.value);
+        this.props.onUpdatePage();
     }
 
     render(){
