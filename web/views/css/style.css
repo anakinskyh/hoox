@@ -374,3 +374,68 @@ html,body{
 /*END MUSIC PLAYER*/
 
 /*END MAIN*/
+
+
+/*SEARCH*/
+.search{
+    margin-top: 20px;
+}
+.is-flex{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.is-flex > div[class*='col-'] {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+.search-img{
+    width: 100px;
+    height: 100px;
+}
+.search-img-col{
+    text-align: center;
+}
+.search-img-col > img{
+    margin-left: auto;
+    margin-right: auto;
+}
+.searchItem{
+
+}
+.search-detail-col{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.search-play-col{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.search-playicon > i{
+    font-size: 100px;
+}
+.search-playicon{
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+}
+.search-artist{
+    color: #ff0000;
+}
+.search-view{
+    color: #808080;
+}
+/*END SEARCH*/

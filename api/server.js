@@ -38,6 +38,7 @@ router.get('/', function(req, res) {
 require('./app/routes/user')(router);
 require('./app/routes/playlist')(router);
 require('./app/routes/songRecord')(router);
+require('./app/routes/song')(router);
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
