@@ -7,10 +7,10 @@ import {Image} from 'react-bootstrap';
 
 
 var recData = [
-    {id:1,img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song1', artistname: 'Artist1', view:12000, music:'musics/music1.mp3'},
-    {id:2,img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song2', artistname: 'Artist2', view:4390, music:'musics/music2.mp3'},
-    {id:3,img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song3', artistname: 'Artist3', view:32910, music:'musics/music3.mp3'},
-    {id:4,img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song4', artistname: 'Artist4', view:2090, music:'musics/music4.mp3'}
+    {id:1,img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song1', artistname: 'Artist1', view:12000, url:'musics/music1.mp3'},
+    {id:2,img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song2', artistname: 'Artist2', view:4390, url:'musics/music2.mp3'},
+    {id:3,img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song3', artistname: 'Artist3', view:32910, url:'musics/music3.mp3'},
+    {id:4,img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song4', artistname: 'Artist4', view:2090, url:'musics/music4.mp3'}
 ];
 
 export default class Recommend extends React.Component{
@@ -20,7 +20,7 @@ export default class Recommend extends React.Component{
             <div className="recommend">
                 <Row>
                 {recData.map((item, index) => (
-                    <RecommendItem key={index} iden={item.id} img={item.img} songname={item.songname} artistname={item.artistname} view={item.view}/>
+                    <RecommendItem key={index} iden={item.id} img={item.img} songname={item.songname} artistname={item.artistname} view={item.view} url={item.url}/>
                 ))}
                 </Row>
             </div>
@@ -30,8 +30,9 @@ export default class Recommend extends React.Component{
 
 export class RecommendItem extends React.Component{
 
-    clickPlay(recId) {
+    clickPlay(recId,url) {
         console.log("clickPlay of rec"+recId);
+        console.log("clickPlay of url"+url);
     }
 
     render(){
@@ -40,7 +41,7 @@ export class RecommendItem extends React.Component{
                 <Row className="rec-img">
                     <Image src={this.props.img} rounded />
                     <div className="rec-filter">
-                        <div className="rec-playicon" onClick={() => this.clickPlay(this.props.iden)}><i className="fa fa-play-circle-o rec-playicon-i" aria-hidden="true"></i></div>
+                        <div className="rec-playicon" onClick={() => this.clickPlay(this.props.iden,this.props.url)}><i className="fa fa-play-circle-o rec-playicon-i" aria-hidden="true"></i></div>
                         <div className="rec-view">
                             <i className="fa fa-eye view-icon" aria-hidden="true"></i>
                             <p>&nbsp;{this.props.view}</p>

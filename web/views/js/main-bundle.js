@@ -26905,7 +26905,7 @@ var Search = _react2.default.createClass({
             'div',
             { className: 'search' },
             this.state.searchData.map(function (item, index) {
-                return _react2.default.createElement(SearchItem, { key: index, iden: item.id, img: item.photo, songname: item.name, artistname: item.artist, view: item.view ? item.view : 0 });
+                return _react2.default.createElement(SearchItem, { key: index, iden: item.id, img: item.photo, songname: item.name, artistname: item.artist, view: item.view ? item.view : 0, url: item.url });
             })
         );
     }
@@ -27023,10 +27023,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Header = function (_React$Component) {
     _inherits(Header, _React$Component);
 
-    function Header() {
+    function Header(props) {
         _classCallCheck(this, Header);
 
-        return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).call(this, props));
+
+        _this.keepSearchWord = _this.keepSearchWord.bind(_this);
+        return _this;
     }
 
     _createClass(Header, [{
@@ -27034,6 +27037,12 @@ var Header = function (_React$Component) {
         value: function updatePage() {
             console.log("updatePage in Header");
             this.props.onUpdatePage();
+        }
+    }, {
+        key: 'keepSearchWord',
+        value: function keepSearchWord(s) {
+            console.log("s in Header: " + s);
+            this.props.onKeepSearchWord(s);
         }
     }, {
         key: 'render',
@@ -27046,7 +27055,7 @@ var Header = function (_React$Component) {
                 _react2.default.createElement(HeaderLogo, null),
                 _react2.default.createElement(HeaderSearchBox, { onUpdatePage: function onUpdatePage() {
                         return _this2.updatePage();
-                    } }),
+                    }, onKeepSearchWord: this.keepSearchWord }),
                 _react2.default.createElement(HeaderUser, null)
             );
         }
@@ -27094,6 +27103,7 @@ var HeaderSearchBox = exports.HeaderSearchBox = function (_React$Component3) {
         value: function handleSubmit() {
             console.log("search word is " + this.refs.searchword.value);
             this.props.onUpdatePage();
+            this.props.onKeepSearchWord(this.refs.searchword.value);
         }
     }, {
         key: 'render',
@@ -31269,6 +31279,9 @@ var Root = _react2.default.createClass({
             page: _react2.default.createElement(_search2.default, null)
         });
     },
+    keepSearchWord: function keepSearchWord(s) {
+        console.log("s in Root: " + s);
+    },
     render: function render() {
         var _this = this;
 
@@ -31280,7 +31293,7 @@ var Root = _react2.default.createClass({
                 { id: 'header', className: 'row' },
                 _react2.default.createElement(_header2.default, { onUpdatePage: function onUpdatePage() {
                         return _this.updatePage();
-                    } })
+                    }, onKeepSearchWord: this.keepSearchWord })
             ),
             this.state.page
         );
@@ -31885,7 +31898,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var recData = [{ id: 1, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song1', artistname: 'Artist1', view: 12000, music: 'musics/music1.mp3' }, { id: 2, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song2', artistname: 'Artist2', view: 4390, music: 'musics/music2.mp3' }, { id: 3, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song3', artistname: 'Artist3', view: 32910, music: 'musics/music3.mp3' }, { id: 4, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song4', artistname: 'Artist4', view: 2090, music: 'musics/music4.mp3' }];
+var recData = [{ id: 1, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song1', artistname: 'Artist1', view: 12000, url: 'musics/music1.mp3' }, { id: 2, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song2', artistname: 'Artist2', view: 4390, url: 'musics/music2.mp3' }, { id: 3, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song3', artistname: 'Artist3', view: 32910, url: 'musics/music3.mp3' }, { id: 4, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song4', artistname: 'Artist4', view: 2090, url: 'musics/music4.mp3' }];
 
 var Recommend = function (_React$Component) {
     _inherits(Recommend, _React$Component);
@@ -31906,7 +31919,7 @@ var Recommend = function (_React$Component) {
                     _reactBootstrap.Row,
                     null,
                     recData.map(function (item, index) {
-                        return _react2.default.createElement(RecommendItem, { key: index, iden: item.id, img: item.img, songname: item.songname, artistname: item.artistname, view: item.view });
+                        return _react2.default.createElement(RecommendItem, { key: index, iden: item.id, img: item.img, songname: item.songname, artistname: item.artistname, view: item.view, url: item.url });
                     })
                 )
             );
@@ -31929,8 +31942,9 @@ var RecommendItem = exports.RecommendItem = function (_React$Component2) {
 
     _createClass(RecommendItem, [{
         key: 'clickPlay',
-        value: function clickPlay(recId) {
+        value: function clickPlay(recId, url) {
             console.log("clickPlay of rec" + recId);
+            console.log("clickPlay of url" + url);
         }
     }, {
         key: 'render',
@@ -31950,7 +31964,7 @@ var RecommendItem = exports.RecommendItem = function (_React$Component2) {
                         _react2.default.createElement(
                             'div',
                             { className: 'rec-playicon', onClick: function onClick() {
-                                    return _this3.clickPlay(_this3.props.iden);
+                                    return _this3.clickPlay(_this3.props.iden, _this3.props.url);
                                 } },
                             _react2.default.createElement('i', { className: 'fa fa-play-circle-o rec-playicon-i', 'aria-hidden': 'true' })
                         ),

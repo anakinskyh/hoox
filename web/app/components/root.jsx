@@ -22,11 +22,14 @@ var Root = React.createClass({
             page: <Search/>
         });
     },
+    keepSearchWord: function(s){
+        console.log("s in Root: "+s);
+    },
     render: function () {
         return(
             <div>
                 <div id="header" className="row">
-                    <Header onUpdatePage={() => this.updatePage()}/>
+                    <Header onUpdatePage={() => this.updatePage()}     onKeepSearchWord={this.keepSearchWord}/>
                 </div>
             {this.state.page}
             </div>
