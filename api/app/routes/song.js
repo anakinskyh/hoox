@@ -26,7 +26,7 @@ module.exports = function(router){
 
       Song.find({
         "name":{"$regex":keyword, "$options":"i"}
-      },function(err,songs){
+      },null,{'sort':{'view':-1}},function(err,songs){
         if(err){
           res.send(err);
         }else {

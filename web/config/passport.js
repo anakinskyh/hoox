@@ -2,6 +2,8 @@
 
 // load all the things we need
 var FacebookStrategy = require('passport-facebook').Strategy;
+var TwitterStrategy = require('passport-twitter').Strategy;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 // load the auth variables
 var configAuth = require('./auth');
@@ -26,20 +28,43 @@ module.exports = function(passport) {
     // });
 
     // facebook
+    console.log('add facebook passport');
     passport.use(new FacebookStrategy({
 
         // pull in our app id and secret from our auth.js file
         clientID        : configAuth.facebookAuth.clientID,
         clientSecret    : configAuth.facebookAuth.clientSecret,
-        callbackURL     : configAuth.facebookAuth.callbackURL
-
+        callbackURL     : configAuth.facebookAuth.callbackURL,
+        profileFields   : ['name','picture','email']
     },
 
     // facebook will send back the token and profile
     function(token, refreshToken, profile, done) {
+        // alert(profile);
+        console.log(profile);
 
-        console.log('profile '+profile+'\n');
         // do something
+    }));
+
+
+    console.log('add twitter passport');
+    passport.use(new TwitterStrategy({
+      consumerKey: configAuth.twitterAuth.consumerKey,
+      consumerSecret: configAuth.twitterAuth.consumerSecret,
+      callbackURL: configAuth.twitterAuth.callbackURL
+    },
+      function(token, tokenSecret, profile, done) {
+        console.log(profile);
+      }
+    ));
+
+    passport.use(new GoogleStrategy({
+      clientID : configAuth.googleAuth.clientID,
+      clientSecret : configAuth.googleAuth.clientSecret,
+      callbackURL : configAuth.googleAuth.callbackURL
+    },
+    function(accessToken, refreshToken, profile, done) {
+         console.log(profile);
     }));
 
 };

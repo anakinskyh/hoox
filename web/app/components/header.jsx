@@ -8,7 +8,6 @@ import {Image} from 'react-bootstrap';
 import {Form} from 'react-bootstrap';
 import {FormControl} from 'react-bootstrap';
 
-
 export default class Header extends React.Component{
 
     updatePage(){
@@ -82,21 +81,21 @@ export class HeaderUser extends React.Component{
     }
 
     facebookLogin(){
-        alert('Facebook Login');
+        // alert('Facebook Login');
         this.setState({
             loginSuccess: true
         });
     }
 
     twitterLogin(){
-        alert('Twitter Login');
+        // alert('Twitter Login');
         this.setState({
             loginSuccess: true
         });
     }
 
     googleLogin(){
-        alert('Google Login');
+        // alert('Google Login');
         this.setState({
             loginSuccess: true
         });
@@ -118,13 +117,22 @@ export class HeaderUser extends React.Component{
                 <button className="login pull-right" style={this.state.loginSuccess ? hide : show} onMouseEnter={() => this.enterLogin()} onMouseLeave={() => this.leaveLogin()}>Login</button>
                 <div className="selectLogin row" style={this.state.loginfocus && !this.state.loginSuccess ? show : hide} onMouseEnter={() => this.enterLogin()} onMouseLeave={() => this.leaveLogin()} >
                     <div className="col-xs-4">
-                        <img src="images/logo/facebook.png" className="logo-login" onClick={() => this.facebookLogin()} />
+                        <a href="login/facebook">
+                          <img src="images/logo/facebook.png" className="logo-login"  />
+                          // onClick={() => this.facebookLogin()}
+                        </a>
                     </div>
                     <div className="col-xs-4">
-                        <img src="images/logo/twitter.png" className="logo-login" onClick={() => this.twitterLogin()} />
+                        <a href='login/twitter'>
+                          <img src="images/logo/twitter.png" className="logo-login"  />
+                          // onClick={() => this.twitterLogin()}
+                        </a>
                     </div>
                     <div className="col-xs-4">
-                        <img src="images/logo/google.png" className="logo-login" onClick={() => this.googleLogin()} />
+                        <a href='login/google'>
+                          <img src="images/logo/google.png" className="logo-login"  />
+                          // onClick={() => this.googleLogin()}
+                        </a>
                     </div>
                 </div>
                 <div className="logout" style={this.state.loginSuccess ? show : hide}>
