@@ -26880,9 +26880,11 @@ var Search = _react2.default.createClass({
         console.log(that);
         console.log("this");
         console.log(this);
+        console.log("keyword (call api) is " + this.props.keyword);
+        var kw = this.props.keyword;
 
         $(document).ready(function () {
-            $.post("http://139.59.118.208:18000/api/getsong", { keyword: "" }, function (data) {
+            $.post("http://139.59.118.208:18000/api/getsong", { keyword: kw }, function (data) {
                 console.log(data);
 
                 searchData = data;
@@ -26900,6 +26902,9 @@ var Search = _react2.default.createClass({
         }
         {
             console.log(searchData);
+        }
+        {
+            console.log(this.props.keyword);
         }
         return _react2.default.createElement(
             'div',
@@ -31265,22 +31270,28 @@ var Root = _react2.default.createClass({
 
     getDefaultProps: function getDefaultProps() {
         return {
-            page: _react2.default.createElement(_main2.default, null)
+            page: _react2.default.createElement(_main2.default, null),
+            keyword: ""
         };
     },
     getInitialState: function getInitialState() {
         return {
-            page: this.props.page
+            page: this.props.page,
+            keyword: this.props.keyword
         };
     },
     updatePage: function updatePage() {
         console.log("updatePage in Root");
-        this.setState({
-            page: _react2.default.createElement(_search2.default, null)
-        });
+        //this.setState({
+        //
+        //});
     },
     keepSearchWord: function keepSearchWord(s) {
         console.log("s in Root: " + s);
+        this.setState({
+            page: _react2.default.createElement(_search2.default, { keyword: s }),
+            keyword: s
+        });
     },
     render: function render() {
         var _this = this;

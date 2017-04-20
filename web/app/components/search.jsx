@@ -35,10 +35,11 @@ var Search = React.createClass({
         console.log(that);
         console.log("this");
         console.log(this);
-
-
+        console.log("keyword (call api) is "+this.props.keyword);
+        var kw = this.props.keyword;
+        
         $(document).ready(function(){
-          $.post("http://139.59.118.208:18000/api/getsong",{keyword:""},
+          $.post("http://139.59.118.208:18000/api/getsong",{keyword:kw},
           function(data){console.log(data)
 
             searchData = data;
@@ -56,6 +57,7 @@ var Search = React.createClass({
 
         {console.log("searchData:")}
         {console.log(searchData)}
+        {console.log(this.props.keyword)}
         return(
             <div className="search">
                 {this.state.searchData.map((item, index) => (

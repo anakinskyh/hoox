@@ -8,22 +8,28 @@ import Search from './search'
 var Root = React.createClass({
     getDefaultProps: function () {
         return {
-            page: <Main/>
+            page: <Main/>,
+            keyword: ""
         };
     },
     getInitialState: function () {
         return {
-            page: this.props.page
+            page: this.props.page,
+            keyword: this.props.keyword
         };
     },
     updatePage: function () {
         console.log("updatePage in Root");
-        this.setState({
-            page: <Search/>
-        });
+        //this.setState({
+        //
+        //});
     },
     keepSearchWord: function(s){
         console.log("s in Root: "+s);
+        this.setState({
+            page: <Search keyword={s}/>,
+            keyword: s
+        });
     },
     render: function () {
         return(
