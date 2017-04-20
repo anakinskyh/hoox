@@ -26852,7 +26852,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 // var youtubeStream = require('youtube-audio-stream')
 
 
-var searchData = [{ id: 1, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song1', artistname: 'Artist1', view: 12000 }, { id: 2, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song2', artistname: 'Artist2', view: 4390 }, { id: 3, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song3', artistname: 'Artist3', view: 32910 }, { id: 4, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song4', artistname: 'Artist4', view: 2090 }];
+var searchData = [{ id: 1, photo: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', name: 'Song1', artist: 'Artist1', view: 12000, url: 'musics/music1.mp3' }, { id: 2, photo: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', name: 'Song2', artist: 'Artist2', view: 4390, url: 'musics/music1.mp3' }, { id: 3, photo: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', name: 'Song3', artist: 'Artist3', view: 32910, url: 'musics/music1.mp3' }, { id: 4, photo: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', name: 'Song4', artist: 'Artist4', view: 2090, url: 'musics/music1.mp3' }];
 var tmp = 0;
 
 var Search = _react2.default.createClass({
@@ -31911,39 +31911,78 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var recData = [{ id: 1, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song1', artistname: 'Artist1', view: 12000, url: 'musics/music1.mp3' }, { id: 2, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song2', artistname: 'Artist2', view: 4390, url: 'musics/music2.mp3' }, { id: 3, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song3', artistname: 'Artist3', view: 32910, url: 'musics/music3.mp3' }, { id: 4, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song4', artistname: 'Artist4', view: 2090, url: 'musics/music4.mp3' }];
 
-var Recommend = function (_React$Component) {
-    _inherits(Recommend, _React$Component);
+//export default class Recommend extends React.Component{
+//
+//    render(){
+//        return(
+//            <div className="recommend">
+//                <Row>
+//                {recData.map((item, index) => (
+//                    <RecommendItem key={index} iden={item.id} img={item.img} songname={item.songname} artistname={item.artistname} view={item.view} url={item.url}/>
+//                ))}
+//                </Row>
+//            </div>
+//        );
+//    }
+//}
 
-    function Recommend() {
-        _classCallCheck(this, Recommend);
 
-        return _possibleConstructorReturn(this, (Recommend.__proto__ || Object.getPrototypeOf(Recommend)).apply(this, arguments));
-    }
+var Recommend = _react2.default.createClass({
+    displayName: 'Recommend',
 
-    _createClass(Recommend, [{
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'div',
-                { className: 'recommend' },
-                _react2.default.createElement(
-                    _reactBootstrap.Row,
-                    null,
-                    recData.map(function (item, index) {
-                        return _react2.default.createElement(RecommendItem, { key: index, iden: item.id, img: item.img, songname: item.songname, artistname: item.artistname, view: item.view, url: item.url });
-                    })
-                )
-            );
+
+    getDefaultProps: function getDefaultProps() {
+        return {
+            recData: recData
+        };
+    },
+    getInitialState: function getInitialState() {
+        return {
+            recData: this.props.recData
+        };
+    },
+    componentDidMount: function componentDidMount() {
+        this.callSongAPI();
+    },
+
+    callSongAPI: function callSongAPI() {
+        console.log('call api in recommend');
+        var that = this;
+        $(document).ready(function () {
+            $.post("http://139.59.118.208:18000/api/getsong", { keyword: "" }, function (data) {
+                console.log(data);
+
+                that.setState({
+                    recData: data
+                });
+            }, "json");
+        });
+    },
+
+    render: function render() {
+
+        {
+            console.log("recData:");
         }
-    }]);
+        {
+            console.log(recData);
+        }
+        return _react2.default.createElement(
+            'div',
+            { className: 'recommend' },
+            _react2.default.createElement(
+                _reactBootstrap.Row,
+                null,
+                recData.map(function (item, index) {
+                    return _react2.default.createElement(RecommendItem, { key: index, iden: item.id, img: item.img, songname: item.name, artistname: item.artist, view: item.view ? item.view : 0, url: item.url });
+                })
+            )
+        );
+    }
+});
 
-    return Recommend;
-}(_react2.default.Component);
-
-exports.default = Recommend;
-
-var RecommendItem = exports.RecommendItem = function (_React$Component2) {
-    _inherits(RecommendItem, _React$Component2);
+var RecommendItem = exports.RecommendItem = function (_React$Component) {
+    _inherits(RecommendItem, _React$Component);
 
     function RecommendItem() {
         _classCallCheck(this, RecommendItem);
@@ -31960,7 +31999,7 @@ var RecommendItem = exports.RecommendItem = function (_React$Component2) {
     }, {
         key: 'render',
         value: function render() {
-            var _this3 = this;
+            var _this2 = this;
 
             return _react2.default.createElement(
                 _reactBootstrap.Col,
@@ -31975,7 +32014,7 @@ var RecommendItem = exports.RecommendItem = function (_React$Component2) {
                         _react2.default.createElement(
                             'div',
                             { className: 'rec-playicon', onClick: function onClick() {
-                                    return _this3.clickPlay(_this3.props.iden, _this3.props.url);
+                                    return _this2.clickPlay(_this2.props.iden, _this2.props.url);
                                 } },
                             _react2.default.createElement('i', { className: 'fa fa-play-circle-o rec-playicon-i', 'aria-hidden': 'true' })
                         ),
@@ -32012,6 +32051,8 @@ var RecommendItem = exports.RecommendItem = function (_React$Component2) {
 
     return RecommendItem;
 }(_react2.default.Component);
+
+module.exports = Recommend;
 
 /***/ }),
 /* 323 */

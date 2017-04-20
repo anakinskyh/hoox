@@ -13,20 +13,71 @@ var recData = [
     {id:4,img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song4', artistname: 'Artist4', view:2090, url:'musics/music4.mp3'}
 ];
 
-export default class Recommend extends React.Component{
+//export default class Recommend extends React.Component{
+//
+//    render(){
+//        return(
+//            <div className="recommend">
+//                <Row>
+//                {recData.map((item, index) => (
+//                    <RecommendItem key={index} iden={item.id} img={item.img} songname={item.songname} artistname={item.artistname} view={item.view} url={item.url}/>
+//                ))}
+//                </Row>
+//            </div>
+//        );
+//    }
+//}
 
-    render(){
+
+var Recommend = React.createClass({
+
+    getDefaultProps: function () {
+        return {
+            recData: recData
+        };
+    },
+    getInitialState: function () {
+        return {
+            recData: this.props.recData
+        };
+    },
+    componentDidMount(){
+        this.callSongAPI();
+    },
+    callSongAPI: function(){
+        console.log('call api in recommend');
+        var that = this;
+        $(document).ready(function(){
+            $.post("http://139.59.118.208:18000/api/getsong",{keyword:""},
+                function(data){console.log(data)
+
+                    that.setState({
+                        recData: data
+                    });
+
+
+                },"json");
+
+        });
+    },
+
+    render: function(){
+
+        {console.log("recData:")}
+        {console.log(recData)}
         return(
             <div className="recommend">
                 <Row>
                 {recData.map((item, index) => (
-                    <RecommendItem key={index} iden={item.id} img={item.img} songname={item.songname} artistname={item.artistname} view={item.view} url={item.url}/>
+                    <RecommendItem key={index} iden={item.id} img={item.img} songname={item.name} artistname={item.artist} view={item.view? item.view:0} url={item.url}/>
                 ))}
                 </Row>
             </div>
         );
     }
-}
+});
+
+
 
 export class RecommendItem extends React.Component{
 
@@ -56,3 +107,5 @@ export class RecommendItem extends React.Component{
         );
     }
 }
+
+module.exports = Recommend;
