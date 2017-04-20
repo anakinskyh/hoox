@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 
 export default class TopTen extends React.Component{
     constructor(){
@@ -11,24 +12,51 @@ export default class TopTen extends React.Component{
                     ];
 
         this.state = {
-            // toptensong: Array(10).fill(null)
-            toptensong: temp
+            songname: Array(10).fill(null),
+            artistname: Array(10).fill(null),
+            toptensong: Array(10).fill(null)
+            // toptensong: temp
         };
+    }
+
+    componentDidMount(){
+        var self = this;
+
+        axios.post('http://139.59.118.208:18000/api/getsong',{keyword:""})
+            .then(function(response){
+                var song = [];
+                var artist = [];
+                var topten = [];
+                
+                var arr = response.data;
+
+                for(var i = 0; i < arr.length; i++){
+                    song.push(arr[i].name);
+                    artist.push(arr[i].artist);
+                    topten.push(arr[i].url);
+                }
+
+                self.setState({
+                    songname: song,
+                    artistname: artist,
+                    toptensong: topten
+                });
+            });
     }
 
     render(){
         return(
             <div className="topten">
-                <TopTenItem onclick={this.props.clickTopTen} rank="1" songname="Song 1" artistname="Artist 1" music={this.state.toptensong[0]} />
-                <TopTenItem onclick={this.props.clickTopTen} rank="2" songname="Song 2" artistname="Artist 2" music={this.state.toptensong[1]} />
-                <TopTenItem onclick={this.props.clickTopTen} rank="3" songname="Song 3" artistname="Artist 3" music={this.state.toptensong[2]} />
-                <TopTenItem onclick={this.props.clickTopTen} rank="4" songname="Song 4" artistname="Artist 4" music={this.state.toptensong[3]} />
-                <TopTenItem onclick={this.props.clickTopTen} rank="5" songname="Song 5" artistname="Artist 5" music={this.state.toptensong[4]} />
-                <TopTenItem onclick={this.props.clickTopTen} rank="6" songname="Song 6" artistname="Artist 6" music={this.state.toptensong[5]} />
-                <TopTenItem onclick={this.props.clickTopTen} rank="7" songname="Song 7" artistname="Artist 7" music={this.state.toptensong[6]} />
-                <TopTenItem onclick={this.props.clickTopTen} rank="8" songname="Song 8" artistname="Artist 8" music={this.state.toptensong[7]} />
-                <TopTenItem onclick={this.props.clickTopTen} rank="9" songname="Song 9" artistname="Artist 9" music={this.state.toptensong[8]} />
-                <TopTenItem onclick={this.props.clickTopTen} rank="10" songname="Song 10" artistname="Artist 10" music={this.state.toptensong[9]} />
+                <TopTenItem onclick={this.props.clickTopTen} rank="1" songname={this.state.songname[0]} artistname={this.state.artistname[0]} music={this.state.toptensong[0]} />
+                <TopTenItem onclick={this.props.clickTopTen} rank="2" songname={this.state.songname[1]} artistname={this.state.artistname[0]} music={this.state.toptensong[1]} />
+                <TopTenItem onclick={this.props.clickTopTen} rank="3" songname={this.state.songname[2]} artistname={this.state.artistname[0]} music={this.state.toptensong[2]} />
+                <TopTenItem onclick={this.props.clickTopTen} rank="4" songname={this.state.songname[3]} artistname={this.state.artistname[0]} music={this.state.toptensong[3]} />
+                <TopTenItem onclick={this.props.clickTopTen} rank="5" songname={this.state.songname[4]} artistname={this.state.artistname[0]} music={this.state.toptensong[4]} />
+                <TopTenItem onclick={this.props.clickTopTen} rank="6" songname={this.state.songname[5]} artistname={this.state.artistname[0]} music={this.state.toptensong[5]} />
+                <TopTenItem onclick={this.props.clickTopTen} rank="7" songname={this.state.songname[6]} artistname={this.state.artistname[0]} music={this.state.toptensong[6]} />
+                <TopTenItem onclick={this.props.clickTopTen} rank="8" songname={this.state.songname[7]} artistname={this.state.artistname[0]} music={this.state.toptensong[7]} />
+                <TopTenItem onclick={this.props.clickTopTen} rank="9" songname={this.state.songname[8]} artistname={this.state.artistname[0]} music={this.state.toptensong[8]} />
+                <TopTenItem onclick={this.props.clickTopTen} rank="10" songname={this.state.songname[9]} artistname={this.state.artistname[0]} music={this.state.toptensong[9]} />
             </div>      
         );
     }
