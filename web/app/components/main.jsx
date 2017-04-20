@@ -45,7 +45,7 @@ export default class Main extends React.Component{
                         <p className="title">เพลย์ลิสต์แนะนำ</p>
                         <hr className="line" />
                         <div id="recommend-content">
-                            <Recommend />
+                            <Recommend clickTopTen={this.onClickTopTen.bind(this)}/>
                         </div>
                     </Col>
                     <Col xs={5} sm={5} md={4} lg={3}  id="topten" >

@@ -9,17 +9,27 @@ import {Form} from 'react-bootstrap';
 import {FormControl} from 'react-bootstrap';
 
 export default class Header extends React.Component{
+    constructor(props) {
+        super(props);
+        this.keepSearchWord = this.keepSearchWord.bind(this);
+    }
 
     updatePage(){
         console.log("updatePage in Header");
         this.props.onUpdatePage();
+
+    }
+
+    keepSearchWord(s){
+        console.log("s in Header: "+s);
+        this.props.onKeepSearchWord(s)
     }
 
     render(){
         return(
             <Row id="header-content">
                 <HeaderLogo/>
-                <HeaderSearchBox onUpdatePage={() => this.updatePage()}/>
+                <HeaderSearchBox onUpdatePage={() => this.updatePage()}  onKeepSearchWord={this.keepSearchWord}/>
                 <HeaderUser/>
             </Row>
         );
@@ -43,6 +53,7 @@ export class HeaderSearchBox extends React.Component{
     handleSubmit(){
         console.log("search word is "+this.refs.searchword.value);
         this.props.onUpdatePage();
+        this.props.onKeepSearchWord(this.refs.searchword.value);
     }
 
     render(){
