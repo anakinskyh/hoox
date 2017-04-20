@@ -11,45 +11,62 @@ var searchData = [
     {id:3,img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song3', artistname: 'Artist3', view:32910},
     {id:4,img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song4', artistname: 'Artist4', view:2090}
 ];
+var tmp = 0;
 
+var Search = React.createClass({
 
-export  default class Search extends React.Component{
-
-    constructor(){
-      super();
-    }
-
-    callSongAPI(){
-      console.log('call api');
-      $(document).ready(function(){
-        $.ajax({
-          url: 'http://',
-          dataType: 'jsonp',
-          cache: false,
-          timeout: 5000,
-          success: function(data){
-            console.log('called');
-            console.log(data);
-          },
-          error: function(jqXHR, textStatus, errorThrown) {
-            alert('error ' + textStatus + " " + errorThrown);
-          }
-        });
-      });
-    }
-
-    render(){
+    getDefaultProps: function () {
+        return {
+            searchData: searchData
+        };
+    },
+    getInitialState: function () {
+        return {
+            searchData: this.props.searchData
+        };
+    },
+    componentDidMount(){
         this.callSongAPI();
+    },
+    callSongAPI: function(){
+      console.log('call api');
+        var that = this;
+        console.log("that");
+        console.log(that);
+        console.log("this");
+        console.log(this);
+
+
+        $(document).ready(function(){
+          $.post("http://139.59.118.208:18000/api/getsong",{keyword:""},
+          function(data){console.log(data)
+
+            searchData = data;
+              that.setState({
+                  searchData: data
+              });
+
+
+          },"json");
+
+      });
+    },
+
+    render: function(){
+
+        {console.log("searchData:")}
+        {console.log(searchData)}
         return(
             <div className="search">
-                {searchData.map((item, index) => (
-                    <SearchItem key={index} iden={item.id} img={item.img} songname={item.songname} artistname={item.artistname} view={item.view}/>
+                {this.state.searchData.map((item, index) => (
+                    <SearchItem key={index} iden={item.id} img={item.photo} songname={item.name} artistname={item.artist} view={item.view? item.view:0} url={item.url}/>
 
                 ))}
             </div>
         );
     }
-}
+});
+
 
 export class SearchItem extends React.Component{
 
@@ -82,3 +99,7 @@ export class SearchItem extends React.Component{
         );
     }
 }
+
+
+module.exports = Search;
+

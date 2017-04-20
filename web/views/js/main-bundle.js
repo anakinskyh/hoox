@@ -26853,57 +26853,66 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 var searchData = [{ id: 1, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song1', artistname: 'Artist1', view: 12000 }, { id: 2, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song2', artistname: 'Artist2', view: 4390 }, { id: 3, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song3', artistname: 'Artist3', view: 32910 }, { id: 4, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song4', artistname: 'Artist4', view: 2090 }];
+var tmp = 0;
 
-var Search = function (_React$Component) {
-    _inherits(Search, _React$Component);
+var Search = _react2.default.createClass({
+    displayName: 'Search',
 
-    function Search() {
-        _classCallCheck(this, Search);
 
-        return _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this));
-    }
+    getDefaultProps: function getDefaultProps() {
+        return {
+            searchData: searchData
+        };
+    },
+    getInitialState: function getInitialState() {
+        return {
+            searchData: this.props.searchData
+        };
+    },
+    componentDidMount: function componentDidMount() {
+        this.callSongAPI();
+    },
 
-    _createClass(Search, [{
-        key: 'callSongAPI',
-        value: function callSongAPI() {
-            console.log('call api');
-            $(document).ready(function () {
-                $.ajax({
-                    url: 'http://',
-                    dataType: 'jsonp',
-                    cache: false,
-                    timeout: 5000,
-                    success: function success(data) {
-                        console.log('called');
-                        console.log(data);
-                    },
-                    error: function error(jqXHR, textStatus, errorThrown) {
-                        alert('error ' + textStatus + " " + errorThrown);
-                    }
+    callSongAPI: function callSongAPI() {
+        console.log('call api');
+        var that = this;
+        console.log("that");
+        console.log(that);
+        console.log("this");
+        console.log(this);
+
+        $(document).ready(function () {
+            $.post("http://139.59.118.208:18000/api/getsong", { keyword: "" }, function (data) {
+                console.log(data);
+
+                searchData = data;
+                that.setState({
+                    searchData: data
                 });
-            });
+            }, "json");
+        });
+    },
+
+    render: function render() {
+
+        {
+            console.log("searchData:");
         }
-    }, {
-        key: 'render',
-        value: function render() {
-            this.callSongAPI();
-            return _react2.default.createElement(
-                'div',
-                { className: 'search' },
-                searchData.map(function (item, index) {
-                    return _react2.default.createElement(SearchItem, { key: index, iden: item.id, img: item.img, songname: item.songname, artistname: item.artistname, view: item.view });
-                })
-            );
+        {
+            console.log(searchData);
         }
-    }]);
+        return _react2.default.createElement(
+            'div',
+            { className: 'search' },
+            this.state.searchData.map(function (item, index) {
+                return _react2.default.createElement(SearchItem, { key: index, iden: item.id, img: item.photo, songname: item.name, artistname: item.artist, view: item.view ? item.view : 0 });
+            })
+        );
+    }
+});
 
-    return Search;
-}(_react2.default.Component);
-
-exports.default = Search;
-
-var SearchItem = exports.SearchItem = function (_React$Component2) {
-    _inherits(SearchItem, _React$Component2);
+var SearchItem = exports.SearchItem = function (_React$Component) {
+    _inherits(SearchItem, _React$Component);
 
     function SearchItem() {
         _classCallCheck(this, SearchItem);
@@ -26919,7 +26928,7 @@ var SearchItem = exports.SearchItem = function (_React$Component2) {
     }, {
         key: 'render',
         value: function render() {
-            var _this3 = this;
+            var _this2 = this;
 
             return _react2.default.createElement(
                 'div',
@@ -26933,7 +26942,7 @@ var SearchItem = exports.SearchItem = function (_React$Component2) {
                         _react2.default.createElement(
                             'div',
                             { className: 'search-playicon', onClick: function onClick() {
-                                    return _this3.clickPlay(_this3.props.iden);
+                                    return _this2.clickPlay(_this2.props.iden);
                                 } },
                             _react2.default.createElement('i', { className: 'fa fa-play-circle-o ', 'aria-hidden': 'true' })
                         )
@@ -26976,6 +26985,8 @@ var SearchItem = exports.SearchItem = function (_React$Component2) {
 
     return SearchItem;
 }(_react2.default.Component);
+
+module.exports = Search;
 
 /***/ }),
 /* 266 */
@@ -27035,7 +27046,8 @@ var Header = function (_React$Component) {
                 _react2.default.createElement(HeaderLogo, null),
                 _react2.default.createElement(HeaderSearchBox, { onUpdatePage: function onUpdatePage() {
                         return _this2.updatePage();
-                    } })
+                    } }),
+                _react2.default.createElement(HeaderUser, null)
             );
         }
     }]);
@@ -27120,41 +27132,142 @@ var HeaderUser = exports.HeaderUser = function (_React$Component4) {
     function HeaderUser() {
         _classCallCheck(this, HeaderUser);
 
-        return _possibleConstructorReturn(this, (HeaderUser.__proto__ || Object.getPrototypeOf(HeaderUser)).apply(this, arguments));
+        var _this6 = _possibleConstructorReturn(this, (HeaderUser.__proto__ || Object.getPrototypeOf(HeaderUser)).call(this));
+
+        _this6.state = {
+            loginfocus: false,
+            loginSuccess: false
+        };
+        return _this6;
     }
 
     _createClass(HeaderUser, [{
+        key: 'enterLogin',
+        value: function enterLogin() {
+            this.setState({
+                loginfocus: true
+            });
+        }
+    }, {
+        key: 'leaveLogin',
+        value: function leaveLogin() {
+            this.setState({
+                loginfocus: false
+            });
+        }
+    }, {
+        key: 'facebookLogin',
+        value: function facebookLogin() {
+            // alert('Facebook Login');
+            this.setState({
+                loginSuccess: true
+            });
+        }
+    }, {
+        key: 'twitterLogin',
+        value: function twitterLogin() {
+            // alert('Twitter Login');
+            this.setState({
+                loginSuccess: true
+            });
+        }
+    }, {
+        key: 'googleLogin',
+        value: function googleLogin() {
+            // alert('Google Login');
+            this.setState({
+                loginSuccess: true
+            });
+        }
+    }, {
+        key: 'logout',
+        value: function logout() {
+            this.setState({
+                loginSuccess: false
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
+            var _this7 = this;
+
+            var show = { display: 'block' };
+            var hide = { display: 'none' };
+
             return _react2.default.createElement(
-                _reactBootstrap.Col,
-                { xs: 4, sm: 4, md: 4, lg: 4, id: 'search' },
+                'div',
+                { className: 'login-container col-xs-4' },
+                _react2.default.createElement(
+                    'button',
+                    { className: 'login pull-right', style: this.state.loginSuccess ? hide : show, onMouseEnter: function onMouseEnter() {
+                            return _this7.enterLogin();
+                        }, onMouseLeave: function onMouseLeave() {
+                            return _this7.leaveLogin();
+                        } },
+                    'Login'
+                ),
                 _react2.default.createElement(
                     'div',
-                    { id: 'user-box', className: 'dropdown' },
+                    { className: 'selectLogin row', style: this.state.loginfocus && !this.state.loginSuccess ? show : hide, onMouseEnter: function onMouseEnter() {
+                            return _this7.enterLogin();
+                        }, onMouseLeave: function onMouseLeave() {
+                            return _this7.leaveLogin();
+                        } },
                     _react2.default.createElement(
-                        'button',
-                        { className: 'btn btn-primary dropdown-toggle', type: 'button', 'data-toggle': 'dropdown' },
-                        'User',
-                        _react2.default.createElement('span', { className: 'caret' })
+                        'div',
+                        { className: 'col-xs-4' },
+                        _react2.default.createElement(
+                            'a',
+                            { href: 'login/facebook' },
+                            _react2.default.createElement('img', { src: 'images/logo/facebook.png', className: 'logo-login' }),
+                            '// onClick=',
+                            function () {
+                                return _this7.facebookLogin();
+                            }
+                        )
                     ),
                     _react2.default.createElement(
                         'div',
-                        { id: 'account-menu' },
-                        _react2.default.createElement(_account2.default, null)
+                        { className: 'col-xs-4' },
+                        _react2.default.createElement(
+                            'a',
+                            { href: 'login/twitter' },
+                            _react2.default.createElement('img', { src: 'images/logo/twitter.png', className: 'logo-login' }),
+                            '// onClick=',
+                            function () {
+                                return _this7.twitterLogin();
+                            }
+                        )
                     ),
                     _react2.default.createElement(
-                        'ul',
-                        { className: 'dropdown-menu' },
+                        'div',
+                        { className: 'col-xs-4' },
                         _react2.default.createElement(
-                            'li',
-                            null,
-                            _react2.default.createElement(
-                                'a',
-                                { href: '#' },
-                                'Logout'
-                            )
+                            'a',
+                            { href: 'login/google' },
+                            _react2.default.createElement('img', { src: 'images/logo/google.png', className: 'logo-login' }),
+                            '// onClick=',
+                            function () {
+                                return _this7.googleLogin();
+                            }
                         )
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'logout', style: this.state.loginSuccess ? show : hide },
+                    _react2.default.createElement('i', { className: 'fa fa-user user-icon', 'aria-hidden': 'true' }),
+                    _react2.default.createElement(
+                        'span',
+                        { className: 'user-name' },
+                        'Mr.Someone'
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { className: 'logoutBtn', onClick: function onClick() {
+                                return _this7.logout();
+                            } },
+                        'Logout'
                     )
                 )
             );
@@ -31516,11 +31629,6 @@ var MusicPlayer = function (_React$Component) {
                 null,
                 _react2.default.createElement(
                     "div",
-                    { className: "playlist-tab" },
-                    "ddscdsdcd"
-                ),
-                _react2.default.createElement(
-                    "div",
                     { className: "musicplayer row" },
                     _react2.default.createElement(
                         "div",
@@ -31777,7 +31885,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var recData = [{ id: 1, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song1', artistname: 'Artist1', view: 12000 }, { id: 2, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song2', artistname: 'Artist2', view: 4390 }, { id: 3, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song3', artistname: 'Artist3', view: 32910 }, { id: 4, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song4', artistname: 'Artist4', view: 2090 }];
+var recData = [{ id: 1, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song1', artistname: 'Artist1', view: 12000, music: 'musics/music1.mp3' }, { id: 2, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song2', artistname: 'Artist2', view: 4390, music: 'musics/music2.mp3' }, { id: 3, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song3', artistname: 'Artist3', view: 32910, music: 'musics/music3.mp3' }, { id: 4, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song4', artistname: 'Artist4', view: 2090, music: 'musics/music4.mp3' }];
 
 var Recommend = function (_React$Component) {
     _inherits(Recommend, _React$Component);
@@ -31914,7 +32022,7 @@ var TopTen = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (TopTen.__proto__ || Object.getPrototypeOf(TopTen)).call(this));
 
-        var temp = ['musics/music1.mp3', 'musics/music2.mp3', 'musics/music3.mp3', 'musics/music4.mp3', 'musics/music5.mp3', 'musics/music6.mp3', 'musics/music7.mp3', 'musics/music8.mp3', 'musics/music9.mp3', 'http://www.stephaniequinn.com/Music/Allegro%20from%20Duet%20in%20C%20Major.mp3'];
+        var temp = ['http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2011.mp3', 'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2005.mp3', 'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2017.mp3', 'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2008.mp3', 'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2001.mp3', 'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2013.mp3', 'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2002.mp3', 'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2007.mp3', 'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2006.mp3', 'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2009.mp3'];
 
         _this.state = {
             // toptensong: Array(10).fill(null)
