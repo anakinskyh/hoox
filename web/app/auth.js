@@ -15,20 +15,21 @@ module.exports = function(app,passport){
 
     app.get('/login/twitter', passport.authenticate('twitter') );
 
-    app.get('login/twitter/callback',
+    app.get('/login/twitter/callback',
       passport.authenticate('twitter', { successRedirect: '/'}));
 
     app.get('/login/google',
       passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
 
 
-    app.get('/auth/google/callback',
+    app.get('/login/google/callback',
       passport.authenticate('google'),
       function(req, res) {
         res.redirect('/');
     });
 
     app.get('/logout',function(req,res){
-
+      req.session.destroy();
+      res.redirect('/');
     });
 };

@@ -22,7 +22,7 @@ module.exports = function(router){
 
     // search song
     router.route('/getsong').post(function(req,res){
-      var keyword = req.body.keyword;
+      var keyword = req.body.keyword || '';
 
       Song.find({
         "name":{"$regex":keyword, "$options":"i"}

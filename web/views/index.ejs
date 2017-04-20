@@ -24,6 +24,11 @@
             font-family: 'PT Sans', sans-serif;
         }
     </style>
+    <script>
+      var current_user =  <%- JSON.stringify(user) %>
+      window.user = current_user;
+      console.log(window.user.isLogedIn);
+    </script>
 
 </head>
 <body>

@@ -64,7 +64,10 @@ export class HeaderUser extends React.Component{
         super();
         this.state = {
             loginfocus: false,
-            loginSuccess: false
+            // loginSuccess: false
+            loginSuccess: window.user.isLogedIn,
+            photo: window.user.photo,
+            name: window.user.name
         };
     }
 
@@ -119,26 +122,26 @@ export class HeaderUser extends React.Component{
                     <div className="col-xs-4">
                         <a href="login/facebook">
                           <img src="images/logo/facebook.png" className="logo-login"  />
-                          // onClick={() => this.facebookLogin()}
                         </a>
                     </div>
                     <div className="col-xs-4">
-                        <a href='login/twitter'>
+                        <a href='#'>
                           <img src="images/logo/twitter.png" className="logo-login"  />
-                          // onClick={() => this.twitterLogin()}
                         </a>
                     </div>
                     <div className="col-xs-4">
-                        <a href='login/google'>
+                        <a href='#'>
                           <img src="images/logo/google.png" className="logo-login"  />
-                          // onClick={() => this.googleLogin()}
                         </a>
                     </div>
                 </div>
                 <div className="logout" style={this.state.loginSuccess ? show : hide}>
-                    <i className="fa fa-user user-icon" aria-hidden="true"></i>
-                    <span className="user-name">Mr.Someone</span>
-                    <button className="logoutBtn" onClick={() => this.logout()}>Logout</button>
+                    
+                    <img src={this.state.photo} height="30" width="30" />
+                    <span className="user-name">Hi, {this.state.name}</span>
+                    <a href="logout">
+                    <button className="logoutBtn" >Logout</button>
+                    </a>
                 </div>
             </div>
         );

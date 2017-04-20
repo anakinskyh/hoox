@@ -4,6 +4,8 @@
 var FacebookStrategy = require('passport-facebook').Strategy;
 var TwitterStrategy = require('passport-twitter').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var User = require('../app/models/user').User;
+console.log(User);
 
 // load the auth variables
 var configAuth = require('./auth');
@@ -11,21 +13,13 @@ var configAuth = require('./auth');
 // expose this function to our app using module.exports
 module.exports = function(passport) {
 
-	// passport set up
-    // required for persistent login sessions
-    // passport needs ability to serialize and unserialize users out of session
+    passport.serializeUser(function(user, done) {
+      done(null, user);
+    });
 
-    // used to serialize the user for the session
-    // passport.serializeUser(function(user, done) {
-    //     done(null, user.id);
-    // });
-
-    // used to deserialize the user
-    // passport.deserializeUser(function(id, done) {
-    //     User.findById(id, function(err, user) {
-    //         done(err, user);
-    //     });
-    // });
+    passport.deserializeUser(function(user, done) {
+      done(null, user);
+    });
 
     // facebook
     console.log('add facebook passport');
@@ -41,9 +35,20 @@ module.exports = function(passport) {
     // facebook will send back the token and profile
     function(token, refreshToken, profile, done) {
         // alert(profile);
+        // console.log(profile);
+        var user = new User();
+        user.id = profile.id;
+        user.name = profile.name.givenName;
+        user.email = profile.emails[0].value;
+        user.photo = profile.photos[0].value;
+        user.isLogedIn = true;
+        // user.email = profile.user;
         console.log(profile);
+        // user.id =
 
+        // localStorage.setItem('user',user);
         // do something
+        done(null,user);
     }));
 
 
