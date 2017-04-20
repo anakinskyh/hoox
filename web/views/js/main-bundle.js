@@ -26793,7 +26793,7 @@ var Main = function (_React$Component) {
                         _react2.default.createElement(
                             'div',
                             { id: 'recommend-content' },
-                            _react2.default.createElement(_recommend2.default, null)
+                            _react2.default.createElement(_recommend2.default, { clickTopTen: this.onClickTopTen.bind(this) })
                         )
                     ),
                     _react2.default.createElement(
@@ -31909,7 +31909,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var recData = [{ id: 1, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song1', artistname: 'Artist1', view: 12000, url: 'musics/music1.mp3' }, { id: 2, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song2', artistname: 'Artist2', view: 4390, url: 'musics/music2.mp3' }, { id: 3, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song3', artistname: 'Artist3', view: 32910, url: 'musics/music3.mp3' }, { id: 4, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song4', artistname: 'Artist4', view: 2090, url: 'musics/music4.mp3' }];
+var recData = [{ id: 1, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song1', artistname: 'Artist1', view: 12000, url: 'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2011.mp3' }, { id: 2, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song2', artistname: 'Artist2', view: 4390, url: 'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2011.mp3' }, { id: 3, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song3', artistname: 'Artist3', view: 32910, url: 'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2011.mp3' }, { id: 4, img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song4', artistname: 'Artist4', view: 2090, url: 'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2011.mp3' }];
 
 //export default class Recommend extends React.Component{
 //
@@ -31960,6 +31960,7 @@ var Recommend = _react2.default.createClass({
     },
 
     render: function render() {
+        var _this = this;
 
         {
             console.log("recData:");
@@ -31973,8 +31974,8 @@ var Recommend = _react2.default.createClass({
             _react2.default.createElement(
                 _reactBootstrap.Row,
                 null,
-                recData.map(function (item, index) {
-                    return _react2.default.createElement(RecommendItem, { key: index, iden: item.id, img: item.img, songname: item.name, artistname: item.artist, view: item.view ? item.view : 0, url: item.url });
+                this.state.recData.map(function (item, index) {
+                    return _react2.default.createElement(RecommendItem, { key: index, onclick: _this.props.clickTopTen, iden: item.id, img: 'images/m.jpg', songname: item.name, artistname: item.artist, view: item.view ? item.view : 0, music: item.url });
                 })
             )
         );
@@ -31997,9 +31998,14 @@ var RecommendItem = exports.RecommendItem = function (_React$Component) {
             console.log("clickPlay of url" + url);
         }
     }, {
+        key: 'onChangeTopTenLink',
+        value: function onChangeTopTenLink() {
+            this.props.onclick(this.props.songname, this.props.artistname, this.props.music);
+        }
+    }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
+            var _this3 = this;
 
             return _react2.default.createElement(
                 _reactBootstrap.Col,
@@ -32014,7 +32020,7 @@ var RecommendItem = exports.RecommendItem = function (_React$Component) {
                         _react2.default.createElement(
                             'div',
                             { className: 'rec-playicon', onClick: function onClick() {
-                                    return _this2.clickPlay(_this2.props.iden, _this2.props.url);
+                                    return _this3.onChangeTopTenLink();
                                 } },
                             _react2.default.createElement('i', { className: 'fa fa-play-circle-o rec-playicon-i', 'aria-hidden': 'true' })
                         ),
