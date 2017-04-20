@@ -2,7 +2,7 @@ var User = require('../models/user');
 
 module.exports = function(router){
 
-    // /users   
+    // /users
     router.route('/users').post(function(req,res){
         var user = new User();
         user.name = req.body.name;
@@ -55,6 +55,6 @@ module.exports = function(router){
             });
     });
 
-    
+
 
 };

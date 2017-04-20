@@ -4,52 +4,87 @@ import {Col} from 'react-bootstrap';
 import {Image} from 'react-bootstrap';
 // var youtubeStream = require('youtube-audio-stream')
 
+import MusicPlayer from './musicplayer'
+import Player from './player'
+
 
 var searchData = [
-    {id:1,img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song1', artistname: 'Artist1', view:12000},
-    {id:2,img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song2', artistname: 'Artist2', view:4390},
-    {id:3,img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song3', artistname: 'Artist3', view:32910},
-    {id:4,img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song4', artistname: 'Artist4', view:2090}
+    {id:1,photo: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', name: 'Song1', artist: 'Artist1', view:12000, url:'musics/music1.mp3'},
+    {id:2,photo: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', name: 'Song2', artist: 'Artist2', view:4390, url:'musics/music1.mp3'},
+    {id:3,photo: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', name: 'Song3', artist: 'Artist3', view:32910, url:'musics/music1.mp3'},
+    {id:4,photo: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', name: 'Song4', artist: 'Artist4', view:2090, url:'musics/music1.mp3'}
 ];
+var tmp = 0;
 
+var Search = React.createClass({
 
-export  default class Search extends React.Component{
-
-    constructor(){
-      super();
-    }
-
-    callSongAPI(){
-      console.log('call api');
-      $(document).ready(function(){
-        $.ajax({
-          url: 'http://',
-          dataType: 'jsonp',
-          cache: false,
-          timeout: 5000,
-          success: function(data){
-            console.log('called');
-            console.log(data);
-          },
-          error: function(jqXHR, textStatus, errorThrown) {
-            alert('error ' + textStatus + " " + errorThrown);
-          }
-        });
-      });
-    }
-
-    render(){
+    getDefaultProps: function () {
+        return {
+            searchData: searchData,
+            songname: '',
+            artistname: '',
+            musicSrc: ''
+        };
+    },
+    getInitialState: function () {
+        return {
+            searchData: this.props.searchData
+        };
+    },
+    componentDidMount(){
         this.callSongAPI();
+    },
+    callSongAPI: function(){
+      console.log('call api');
+        var that = this;
+        console.log("that");
+        console.log(that);
+        console.log("this");
+        console.log(this);
+        console.log("keyword (call api) is "+this.props.keyword);
+        var kw = this.props.keyword;
+
+        $(document).ready(function(){
+          $.post("http://139.59.118.208:18000/api/getsong",{keyword:kw},
+          function(data){console.log(data)
+
+            searchData = data;
+              that.setState({
+                  searchData: data
+              });
+
+
+          },"json");
+
+      });
+    },
+    onClickTopTen: function(song, artist, music){
+        this.setState({
+            songname: song,
+            artistname: artist,
+            musicSrc: music
+        });
+    },
+
+    render: function(){
+
+        {console.log("searchData:")}
+        {console.log(searchData)}
+        {console.log(this.props.keyword)}
         return(
+            <div>
             <div className="search">
-                {searchData.map((item, index) => (
-                    <SearchItem key={index} iden={item.id} img={item.img} songname={item.songname} artistname={item.artistname} view={item.view}/>
+                {this.state.searchData.map((item, index) => (
+                    <SearchItem onclick={this.onClickTopTen} key={index} iden={item.id} img="images/m.jpg" songname={item.name} artistname={item.artist} view={item.view? item.view:0} music={item.url}/>
 
                 ))}
             </div>
+                <MusicPlayer songname={this.state.songname} artistname={this.state.artistname} musicSrc={this.state.musicSrc} />
+            </div>
         );
     }
-}
+});
+
 
 export class SearchItem extends React.Component{
 
@@ -57,12 +92,16 @@ export class SearchItem extends React.Component{
         console.log("clickPlay of search "+searchId);
     }
 
+    onChangeTopTenLink(){
+        this.props.onclick(this.props.songname, this.props.artistname, this.props.music);
+    }
+
     render(){
         return(
             <div>
                 <div className="row searchItem is-flex">
                     <Col xs={4} sm={4} md={4} lg={4} className="search-play-col">
-                        <div className="search-playicon" onClick={() => this.clickPlay(this.props.iden)}><i className="fa fa-play-circle-o " aria-hidden="true"></i></div>
+                        <div className="search-playicon" onClick={() => this.onChangeTopTenLink()}><i className="fa fa-play-circle-o " aria-hidden="true"></i></div>
                     </Col>
                     <Col xs={4} sm={4} md={4} lg={4} className="search-detail-col">
                         <div>
@@ -82,3 +121,7 @@ export class SearchItem extends React.Component{
         );
     }
 }
+
+
+module.exports = Search;
+

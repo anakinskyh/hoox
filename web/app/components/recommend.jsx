@@ -7,31 +7,87 @@ import {Image} from 'react-bootstrap';
 
 
 var recData = [
-    {id:1,img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song1', artistname: 'Artist1', view:12000},
-    {id:2,img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song2', artistname: 'Artist2', view:4390},
-    {id:3,img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song3', artistname: 'Artist3', view:32910},
-    {id:4,img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song4', artistname: 'Artist4', view:2090}
+    {id:1,img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song1', artistname: 'Artist1', view:12000, url:'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2011.mp3'},
+    {id:2,img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song2', artistname: 'Artist2', view:4390, url:'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2011.mp3'},
+    {id:3,img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song3', artistname: 'Artist3', view:32910, url:'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2011.mp3'},
+    {id:4,img: 'https://upload.wikimedia.org/wikipedia/en/9/9d/B-side_Collections.JPG', songname: 'Song4', artistname: 'Artist4', view:2090, url:'http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2011.mp3'}
 ];
 
-export default class Recommend extends React.Component{
+//export default class Recommend extends React.Component{
+//
+//    render(){
+//        return(
+//            <div className="recommend">
+//                <Row>
+//                {recData.map((item, index) => (
+//                    <RecommendItem key={index} iden={item.id} img={item.img} songname={item.songname} artistname={item.artistname} view={item.view} url={item.url}/>
+//                ))}
+//                </Row>
+//            </div>
+//        );
+//    }
+//}
 
-    render(){
+
+var Recommend = React.createClass({
+
+    getDefaultProps: function () {
+        return {
+            recData: recData
+        };
+    },
+    getInitialState: function () {
+        return {
+            recData: this.props.recData
+        };
+    },
+    componentDidMount(){
+        this.callSongAPI();
+    },
+    callSongAPI: function(){
+        console.log('call api in recommend');
+        var that = this;
+        $(document).ready(function(){
+            $.post("http://139.59.118.208:18000/api/getsong",{keyword:""},
+                function(data){console.log(data)
+
+                    that.setState({
+                        recData: data
+                    });
+
+
+                },"json");
+
+        });
+    },
+
+    render: function(){
+
+        {console.log("recData:")}
+        {console.log(recData)}
         return(
             <div className="recommend">
                 <Row>
-                {recData.map((item, index) => (
-                    <RecommendItem key={index} iden={item.id} img={item.img} songname={item.songname} artistname={item.artistname} view={item.view}/>
+                {this.state.recData.map((item, index) => (
+                    <RecommendItem key={index} onclick={this.props.clickTopTen} iden={item.id} img="images/m.jpg" songname={item.name} artistname={item.artist} view={item.view? item.view:0} music={item.url}/>
                 ))}
                 </Row>
             </div>
         );
     }
-}
+});
+
+
 
 export class RecommendItem extends React.Component{
 
-    clickPlay(recId) {
+    clickPlay(recId,url) {
         console.log("clickPlay of rec"+recId);
+        console.log("clickPlay of url"+url);
+    }
+
+    onChangeTopTenLink(){
+        this.props.onclick(this.props.songname, this.props.artistname, this.props.music);
     }
 
     render(){
@@ -40,7 +96,7 @@ export class RecommendItem extends React.Component{
                 <Row className="rec-img">
                     <Image src={this.props.img} rounded />
                     <div className="rec-filter">
-                        <div className="rec-playicon" onClick={() => this.clickPlay(this.props.iden)}><i className="fa fa-play-circle-o rec-playicon-i" aria-hidden="true"></i></div>
+                        <div className="rec-playicon" onClick={() => this.onChangeTopTenLink()} ><i className="fa fa-play-circle-o rec-playicon-i" aria-hidden="true"></i></div>
                         <div className="rec-view">
                             <i className="fa fa-eye view-icon" aria-hidden="true"></i>
                             <p>&nbsp;{this.props.view}</p>
@@ -55,3 +111,5 @@ export class RecommendItem extends React.Component{
         );
     }
 }
+
+module.exports = Recommend;

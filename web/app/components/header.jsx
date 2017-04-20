@@ -8,19 +8,28 @@ import {Image} from 'react-bootstrap';
 import {Form} from 'react-bootstrap';
 import {FormControl} from 'react-bootstrap';
 
-
 export default class Header extends React.Component{
+    constructor(props) {
+        super(props);
+        this.keepSearchWord = this.keepSearchWord.bind(this);
+    }
 
     updatePage(){
         console.log("updatePage in Header");
         this.props.onUpdatePage();
+
+    }
+
+    keepSearchWord(s){
+        console.log("s in Header: "+s);
+        this.props.onKeepSearchWord(s)
     }
 
     render(){
         return(
             <Row id="header-content">
                 <HeaderLogo/>
-                <HeaderSearchBox onUpdatePage={() => this.updatePage()}/>
+                <HeaderSearchBox onUpdatePage={() => this.updatePage()}  onKeepSearchWord={this.keepSearchWord}/>
                 <HeaderUser/>
             </Row>
         );
@@ -44,6 +53,7 @@ export class HeaderSearchBox extends React.Component{
     handleSubmit(){
         console.log("search word is "+this.refs.searchword.value);
         this.props.onUpdatePage();
+        this.props.onKeepSearchWord(this.refs.searchword.value);
     }
 
     render(){
@@ -65,7 +75,10 @@ export class HeaderUser extends React.Component{
         super();
         this.state = {
             loginfocus: false,
-            loginSuccess: false
+            // loginSuccess: false
+            loginSuccess: window.user.isLogedIn,
+            photo: window.user.photo,
+            name: window.user.name
         };
     }
 
@@ -82,21 +95,21 @@ export class HeaderUser extends React.Component{
     }
 
     facebookLogin(){
-        alert('Facebook Login');
+        // alert('Facebook Login');
         this.setState({
             loginSuccess: true
         });
     }
 
     twitterLogin(){
-        alert('Twitter Login');
+        // alert('Twitter Login');
         this.setState({
             loginSuccess: true
         });
     }
 
     googleLogin(){
-        alert('Google Login');
+        // alert('Google Login');
         this.setState({
             loginSuccess: true
         });
@@ -118,19 +131,28 @@ export class HeaderUser extends React.Component{
                 <button className="login pull-right" style={this.state.loginSuccess ? hide : show} onMouseEnter={() => this.enterLogin()} onMouseLeave={() => this.leaveLogin()}>Login</button>
                 <div className="selectLogin row" style={this.state.loginfocus && !this.state.loginSuccess ? show : hide} onMouseEnter={() => this.enterLogin()} onMouseLeave={() => this.leaveLogin()} >
                     <div className="col-xs-4">
-                        <img src="images/logo/facebook.png" className="logo-login" onClick={() => this.facebookLogin()} />
+                        <a href="login/facebook">
+                          <img src="images/logo/facebook.png" className="logo-login"  />
+                        </a>
                     </div>
                     <div className="col-xs-4">
-                        <img src="images/logo/twitter.png" className="logo-login" onClick={() => this.twitterLogin()} />
+                        <a href='#'>
+                          <img src="images/logo/twitter.png" className="logo-login"  />
+                        </a>
                     </div>
                     <div className="col-xs-4">
-                        <img src="images/logo/google.png" className="logo-login" onClick={() => this.googleLogin()} />
+                        <a href='#'>
+                          <img src="images/logo/google.png" className="logo-login"  />
+                        </a>
                     </div>
                 </div>
                 <div className="logout" style={this.state.loginSuccess ? show : hide}>
-                    <i className="fa fa-user user-icon" aria-hidden="true"></i>
-                    <span className="user-name">Mr.Someone</span>
-                    <button className="logoutBtn" onClick={() => this.logout()}>Logout</button>
+                    
+                    <img src={this.state.photo} height="30" width="30" />
+                    <span className="user-name">Hi, {this.state.name}</span>
+                    <a href="logout">
+                    <button className="logoutBtn" >Logout</button>
+                    </a>
                 </div>
             </div>
         );
