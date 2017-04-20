@@ -111,37 +111,28 @@ export default class MusicPlayer extends React.Component{
         secondDuration = secondDuration < 10 ? "0" + secondDuration : secondDuration;
 
         return(
-            <div>
-                {/*<div className="playlist-tab">
-                    ddscdsdcd
-                </div>*/}
-                <div className="musicplayer row">
-                    <div className="music-player-icon col-xs-1 col-xs-offset-2">
-                        <i className="fa fa-step-backward step-backward" onClick={() => this.stepBackwardMusic()} aria-hidden="true"></i>
-                        <i className="fa fa-play play" style={playStyle} onClick={() => this.playMusic()} aria-hidden="true"></i>
-                        <i className="fa fa-pause pause" style={pauseStyle} onClick={() => this.pauseMusic()} aria-hidden="true"></i>
-                        <i className="fa fa-step-forward step-forward" onClick={() => this.stepForwardMusic()} aria-hidden="true"></i>
+            <div className="musicplayer row">
+                <div className="music-player-icon col-xs-1 col-xs-offset-3">
+                    <i className="fa fa-step-backward step-backward" onClick={() => this.stepBackwardMusic()} aria-hidden="true"></i>
+                    <i className="fa fa-play play" style={playStyle} onClick={() => this.playMusic()} aria-hidden="true"></i>
+                    <i className="fa fa-pause pause" style={pauseStyle} onClick={() => this.pauseMusic()} aria-hidden="true"></i>
+                    <i className="fa fa-step-forward step-forward" onClick={() => this.stepForwardMusic()} aria-hidden="true"></i>
+                </div>
+                <div className="music-detail col-xs-5">
+                    <div className="detail">
+                        <span className="song-detail">{this.props.songname}</span>
+                        <span className="artist-detail">{this.props.artistname}</span>    
                     </div>
-                    <div className="music-detail col-xs-5">
-                        <div className="detail">
-                            <span className="song-detail">{this.props.songname}</span>
-                            <span className="artist-detail">{this.props.artistname}</span>    
+                    <div className="row">
+                        <div className="music-bar col-xs-8" onClick={(e) => this.skipMusic(e)} data-music="bar" >
+                            <div className="music-progress" style={{width: (((this.state.progress*100)/this.audio.duration) + "%")}} data-music="progress" ></div>
                         </div>
-                        <div className="row">
-                            <div className="music-bar col-xs-8" onClick={(e) => this.skipMusic(e)} data-music="bar" >
-                                <div className="music-progress" style={{width: (((this.state.progress*100)/this.audio.duration) + "%")}} data-music="progress" ></div>
-                            </div>
-                            <div className="time-detail col-xs-4">
-                                <span>{minuteProgress}:{secondProgress}</span> / <span>{minuteDuration}:{secondDuration}</span>
-                            </div>
-                        </div>     
-                    </div>
-                    <div className="music-playlist col-xs-1">
-                        <i className="fa fa-list playlist" title="playlists" aria-hidden="true"></i>
-                    </div>
-                </div>          
+                        <div className="time-detail col-xs-4">
+                            <span>{minuteProgress}:{secondProgress}</span> / <span>{minuteDuration}:{secondDuration}</span>
+                        </div>
+                    </div>     
+                </div>
             </div>
-            
         );
     }
 }

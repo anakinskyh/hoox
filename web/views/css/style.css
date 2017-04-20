@@ -279,7 +279,7 @@ html,body{
     z-index: 1200;
 }
 
-.music-player-icon, .music-detail, .music-playlist{
+.music-player-icon, .music-detail{
     padding: 10px 0 0 0;
 }
 
@@ -312,7 +312,6 @@ html,body{
 
 .music-detail{
     padding-left: 20px;
-    border-right: 1px solid grey;
 }
 
 .detail{
@@ -343,32 +342,6 @@ html,body{
     width: 0;
     height: 100%;
     background: #25b227;
-}
-
-.music-playlist{
-   height: 100%;
-   border-right: 1px solid grey; 
-}
-
-.music-playlist .playlist{
-    font-size: 1.5em;
-    cursor: pointer;
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -60%); 
-}
-
-.playlist-tab{
-    width: 60%;
-    height: 200px;
-    position: fixed;
-    bottom: 60px;
-    left: 0;
-    right: 0;
-    margin: auto;
-    background: rgba(0, 0, 0, 0.8);
-    color: lightgray;
 }
 
 /*END MUSIC PLAYER*/
