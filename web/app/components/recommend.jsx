@@ -2,6 +2,7 @@ import React from 'react'
 import {Row} from 'react-bootstrap';
 import {Col} from 'react-bootstrap';
 import {Image} from 'react-bootstrap';
+import axios from 'axios';
 
 
 
@@ -65,11 +66,12 @@ var Recommend = React.createClass({
 
         {console.log("recData:")}
         {console.log(recData)}
+        {console.log("STATE.RecData"+this.state.recData)}
         return(
             <div className="recommend">
                 <Row>
                 {this.state.recData.map((item, index) => (
-                    <RecommendItem key={index} onclick={this.props.clickTopTen} iden={item.id} img="images/m.jpg" songname={item.name} artistname={item.artist} view={item.view? item.view:0} music={item.url}/>
+                    <RecommendItem key={index} onclick={this.props.clickTopTen} iden={item._id} img="images/m.jpg" songname={item.name} artistname={item.artist} view={item.view? item.view:0} music={item.url}/>
                 ))}
                 </Row>
             </div>
@@ -88,6 +90,13 @@ export class RecommendItem extends React.Component{
 
     onChangeTopTenLink(){
         this.props.onclick(this.props.songname, this.props.artistname, this.props.music);
+
+        var self = this;
+        //console.log("idddddd: "+this.props.iden);
+        axios.post('http://139.59.118.208:18000/api/addview',{song_id: self.props.iden})
+            .then(function(response){
+                console.log(response);
+            });
     }
 
     render(){

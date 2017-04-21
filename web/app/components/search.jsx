@@ -2,6 +2,7 @@ import React from 'react'
 
 import {Col} from 'react-bootstrap';
 import {Image} from 'react-bootstrap';
+import axios from 'axios';
 // var youtubeStream = require('youtube-audio-stream')
 
 import MusicPlayer from './musicplayer'
@@ -75,7 +76,7 @@ var Search = React.createClass({
             <div>
             <div className="search">
                 {this.state.searchData.map((item, index) => (
-                    <SearchItem onclick={this.onClickTopTen} key={index} iden={item.id} img="images/m.jpg" songname={item.name} artistname={item.artist} view={item.view? item.view:0} music={item.url}/>
+                    <SearchItem onclick={this.onClickTopTen} key={index} iden={item._id} img="images/m.jpg" songname={item.name} artistname={item.artist} view={item.view? item.view:0} music={item.url}/>
 
                 ))}
             </div>
@@ -94,6 +95,12 @@ export class SearchItem extends React.Component{
 
     onChangeTopTenLink(){
         this.props.onclick(this.props.songname, this.props.artistname, this.props.music);
+        var self = this;
+        //console.log("idddddd: "+this.props.iden);
+        axios.post('http://139.59.118.208:18000/api/addview',{song_id: self.props.iden})
+            .then(function(response){
+                console.log(response);
+            });
     }
 
     render(){
